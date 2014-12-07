@@ -1,0 +1,9 @@
+name: MoleCraft
+version: 0.1.1
+main: me.mani.molecraft.MoleCraft
+depend: [GoldenAPI]
+
+commands:
+  save:
+  setpoint:
+  stats:
