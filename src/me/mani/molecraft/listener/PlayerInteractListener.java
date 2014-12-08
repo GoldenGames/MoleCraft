@@ -44,7 +44,6 @@ public class PlayerInteractListener extends AdvListener {
 		}
 		
 		ev.setCancelled(true);	
-		
 	}
 
 	public class TutorialThread extends Thread {

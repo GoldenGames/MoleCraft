@@ -25,6 +25,9 @@ public class PlayerDeathListener extends AdvListener {
 		if (GameManager.isIngame(p))
 			GameManager.removeIngamePlayer(p);
 		
+		if (GameManager.getPlayerLeft().size() < 1)
+			GameManager.finishGame();
+		
 		ev.setDeathMessage(Message.PREFIX + "§7Der Spieler §e" + p.getName() + " §7hat sich selbst begraben.\n"
 				+ Message.SPACE + (GameManager.getPlayerLeft().size() <= 1 ? 
 					"§7Der Spieler §c" + GameManager.getPlayerLeft().get(0).getName() + " §7gewinnt das Spiel." :

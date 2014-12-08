@@ -33,6 +33,7 @@ import me.mani.molecraft.util.WoolLocation;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -97,6 +98,7 @@ public class GameManager extends Manager {
 	private void setup(Player p, int teamId) {
 		p.teleport(LocationManager.getSpawn(teamId));
 		p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 40*20, 1));
+		p.setGameMode(GameMode.SURVIVAL);
 		TeamManager.setTeam(p, Team.getById(teamId));
 		InventoryManager.setInventory(InventoryType.INGAME, p);
 	}

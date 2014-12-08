@@ -22,7 +22,7 @@ public class PlayerDamageListener extends AdvListener {
 			ev.setCancelled(true);
 		else if (ev.getCause() == DamageCause.SUFFOCATION)
 			ev.setCancelled(true);
-		else if (GameManager.isIngame(p))
+		else if (!GameManager.isIngame(p))
 			ev.setCancelled(true);
 	}
 

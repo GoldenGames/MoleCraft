@@ -2,6 +2,7 @@ package me.mani.molecraft.listener;
 
 import me.mani.goldenapi.hologram.Hologram;
 import me.mani.goldenapi.hologram.Hologram.HologramLineManager;
+import me.mani.goldenapi.util.Title;
 import me.mani.molecraft.GameState;
 import me.mani.molecraft.InventoryManager;
 import me.mani.molecraft.InventoryManager.InventoryType;
@@ -43,6 +44,9 @@ public class PlayerJoinListener extends AdvListener {
 			lm.addLine("Chests: §e" + stats.getChests());
 			lm.addLine("§7-=-=---=|=---=-=-");
 			hologram.sendPlayer(ev.getPlayer());
+			
+			Title title = new Title("§7» §aMoleCraft §7«", "§eSei der wahre §6Mole", 10, 60, 10, false);
+			title.send(ev.getPlayer());
 		}
 		
 	}
