@@ -3,6 +3,7 @@ package me.mani.molecraft.listener;
 import me.mani.molecraft.GameState;
 import me.mani.molecraft.Message;
 import me.mani.molecraft.Message.MessageType;
+import me.mani.molecraft.game.LocationManager.SpecialLocation;
 import me.mani.molecraft.util.AdvListener;
 
 import org.bukkit.ChatColor;
@@ -19,18 +20,30 @@ public class PlayerInteractListener extends AdvListener {
 	public void onPlayerInteract(PlayerInteractEvent ev) {
 		Player p = ev.getPlayer();
 		
-		// Item Interact
+		// Item Interact in Lobby
 		
 		if (getState() != GameState.LOBBY)
 			return;
 		
 		if (ev.getAction() == Action.RIGHT_CLICK_AIR || ev.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			ItemStack item = ev.getItem();
-			if (item != null && item.getType() != null && item.getType() == Material.PAPER) {
+			if (item == null || item.getType() == null)
+				return;
+				
+			// Paper - Explanation
+			
+			if (item.getType() == Material.PAPER) {
 				new TutorialThread(p, item).start();
 				p.getInventory().removeItem(item);
 			}
+			
+			// Firework - Teleport to Parkour
+			
+			if (item.getType() == Material.FIREWORK)
+				p.teleport(SpecialLocation.PARKOUR_SPAWN);			
 		}
+		
+		ev.setCancelled(true);	
 		
 	}
 

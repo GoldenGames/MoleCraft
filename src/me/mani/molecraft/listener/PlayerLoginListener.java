@@ -1,11 +1,11 @@
 package me.mani.molecraft.listener;
 
+import me.mani.molecraft.GameState;
+import me.mani.molecraft.util.AdvListener;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
-
-import me.mani.molecraft.GameState;
-import me.mani.molecraft.util.AdvListener;
 
 public class PlayerLoginListener extends AdvListener {
 	

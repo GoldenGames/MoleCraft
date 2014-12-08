@@ -9,15 +9,16 @@ import me.mani.molecraft.CountdownCountEvent;
 import me.mani.molecraft.CountdownManager;
 import me.mani.molecraft.GameState;
 import me.mani.molecraft.InventoryManager;
-import me.mani.molecraft.MoleCraft;
 import me.mani.molecraft.InventoryManager.InventoryType;
 import me.mani.molecraft.Manager;
 import me.mani.molecraft.Message;
 import me.mani.molecraft.Message.MessageType;
+import me.mani.molecraft.MoleCraft;
 import me.mani.molecraft.game.TeamManager.Team;
 import me.mani.molecraft.listener.BlockBreakListener;
 import me.mani.molecraft.listener.BlockPlaceListener;
 import me.mani.molecraft.listener.EntityExplodeListener;
+import me.mani.molecraft.listener.InventoryClickListener;
 import me.mani.molecraft.listener.PlayerDamageListener;
 import me.mani.molecraft.listener.PlayerDeathListener;
 import me.mani.molecraft.listener.PlayerInteractListener;
@@ -64,6 +65,7 @@ public class GameManager extends Manager {
 		new PressurePlatePressListener();
 		new PlayerLoginListener();
 		new PlayerRespawnListener();
+		new InventoryClickListener();
 		
 		// Commands
 		

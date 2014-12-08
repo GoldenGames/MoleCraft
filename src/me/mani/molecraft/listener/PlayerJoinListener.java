@@ -8,10 +8,11 @@ import me.mani.molecraft.InventoryManager.InventoryType;
 import me.mani.molecraft.Message;
 import me.mani.molecraft.StatsManager;
 import me.mani.molecraft.game.LobbyManager;
-import me.mani.molecraft.game.LocationManager;
+import me.mani.molecraft.game.LocationManager.SpecialLocation;
 import me.mani.molecraft.util.AdvListener;
 import me.mani.molecraft.util.PlayerStats;
 
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -21,15 +22,17 @@ public class PlayerJoinListener extends AdvListener {
 	public void onJoin(PlayerJoinEvent ev) {
 		
 		if (getState() == GameState.LOBBY) {
-			ev.getPlayer().teleport(LocationManager.getLobbySpawn());
 			ev.setJoinMessage(Message.PREFIX + "§a[>>>] §e" + ev.getPlayer().getName());
+			ev.getPlayer().teleport(SpecialLocation.LOBBY_SPAWN);
+			ev.getPlayer().setGameMode(GameMode.ADVENTURE);
+			
 			InventoryManager.setInventory(InventoryType.LOBBY, ev.getPlayer());
 			StatsManager.addPlayerStats(ev.getPlayer());
 			LobbyManager.addPlayer();
 			
 			PlayerStats stats = StatsManager.getPlayerStats(ev.getPlayer());
 			
-			Hologram hologram = new Hologram(LocationManager.getStats());
+			Hologram hologram = new Hologram(SpecialLocation.STATS_DISPLAY);
 			HologramLineManager lm = hologram.getLineManager();
 			lm.addLine("§7-=-=---=|=---=-=-");
 			lm.addLine("§eDeine Stats:");

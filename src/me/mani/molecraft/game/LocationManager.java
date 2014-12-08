@@ -19,14 +19,18 @@ public class LocationManager extends Manager {
 	private static final String WORLD_ALIAS = "world";
 	
 	private static final String LOBBY_SPAWN_ALIAS = "lobbySpawn";
-	private static final String STATS_LOCATION_ALIAS = "statsLocation";
+	private static final String PARKOUR_SPAWN_ALIAS = "parkourSpawn";
+	private static final String STATS_DISPLAY_ALIAS = "statsDisplay";
 	private static final String SPAWN_ALIAS = "spawn#";
 	
 	private int arenaId;
 	
 	private static World world;
+	
 	private static Location lobbySpawn;
-	private static Location statsLocation;
+	private static Location parkourSpawn;
+	private static Location statsDisplay;
+		
 	private static HashMap<Integer, Location> allLocations = new HashMap<>();
 	
 	public LocationManager(int arenaId) {
@@ -40,9 +44,13 @@ public class LocationManager extends Manager {
 		
 		lobbySpawn = ConvertUtil.toLocation((String) GoldenAPI.getManager().get(MoleCraft.TABLE, MoleCraft.SETTING_ALIAS, LOBBY_SPAWN_ALIAS, MoleCraft.VALUE_ALIAS), world).add(0.5, 0, 0.5);
 		
+		// Parkour Spawn
+		
+		parkourSpawn = ConvertUtil.toLocation((String) GoldenAPI.getManager().get(MoleCraft.TABLE, MoleCraft.SETTING_ALIAS, PARKOUR_SPAWN_ALIAS, MoleCraft.VALUE_ALIAS), world).add(0.5, 0, 0.5);
+		
 		// Stats Location
 		
-		statsLocation = ConvertUtil.toLocation((String) GoldenAPI.getManager().get(MoleCraft.TABLE, MoleCraft.SETTING_ALIAS, STATS_LOCATION_ALIAS, MoleCraft.VALUE_ALIAS), world).add(0.5, 0, 0.5);
+		statsDisplay = ConvertUtil.toLocation((String) GoldenAPI.getManager().get(MoleCraft.TABLE, MoleCraft.SETTING_ALIAS, STATS_DISPLAY_ALIAS, MoleCraft.VALUE_ALIAS), world).add(0.5, 0, 0.5);
 		
 		// Arena Spawns
 		
@@ -68,17 +76,15 @@ public class LocationManager extends Manager {
 		return world;
 	}
 	
-	public static Location getLobbySpawn() {
-		return lobbySpawn;
-	}
-	
-	public static Location getStats() {
-		return statsLocation;
-	}
-	
 	public static Location getSpawn(int id) {
 		if (id < 1 || id > 8)
 			return null;
 		return allLocations.get(id);
+	}
+	
+	public static class SpecialLocation {
+		public static Location LOBBY_SPAWN = lobbySpawn; 
+		public static Location PARKOUR_SPAWN = parkourSpawn; 
+		public static Location STATS_DISPLAY = statsDisplay;
 	}
 }

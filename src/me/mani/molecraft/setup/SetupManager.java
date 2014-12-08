@@ -7,7 +7,7 @@ import me.mani.goldenapi.GoldenAPI;
 import me.mani.goldenapi.mysql.ConvertUtil;
 import me.mani.molecraft.BlockMath;
 import me.mani.molecraft.Manager;
-import me.mani.molecraft.game.LocationManager;
+import me.mani.molecraft.game.LocationManager.SpecialLocation;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -49,7 +49,7 @@ public class SetupManager extends Manager {
 			if (!loc.getChunk().isLoaded())
 				loc.getChunk().load();
 		}
-		Chunk spawnChunk = LocationManager.getLobbySpawn().getChunk();
+		Chunk spawnChunk = SpecialLocation.LOBBY_SPAWN.getChunk();
 		if (!spawnChunk.isLoaded())
 			spawnChunk.load();
 	}
