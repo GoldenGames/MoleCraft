@@ -1,11 +1,11 @@
 package me.mani.molecraft.util;
 
-import net.minecraft.server.v1_7_R4.Packet;
-import net.minecraft.server.v1_7_R4.PacketDataSerializer;
-import net.minecraft.server.v1_7_R4.PacketListener;
-import net.minecraft.server.v1_7_R4.PacketPlayOutListener;
+import net.minecraft.server.v1_8_R1.PacketDataSerializer;
+import net.minecraft.server.v1_8_R1.PacketListener;
 
 import org.bukkit.Location;
+
+import com.avaje.ebeaninternal.server.cluster.Packet;
 
 public class CustomPacketBlockChange extends Packet {
 	

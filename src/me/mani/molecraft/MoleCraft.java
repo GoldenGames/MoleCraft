@@ -34,8 +34,6 @@ public class MoleCraft extends JavaPlugin {
 		GoldenAPI.connectToSQL(this);
 		GoldenAPI.setPlayerNameWatching(true);
 		
-		getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-		
 		configManager = new ConfigManager();
 		configManager.synchronize();
 			

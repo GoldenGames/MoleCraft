@@ -5,9 +5,9 @@ import java.util.List;
 
 import me.mani.goldenapi.GoldenAPI;
 import me.mani.goldenapi.mysql.ConvertUtil;
-import me.mani.molecraft.BlockMath;
 import me.mani.molecraft.Manager;
 import me.mani.molecraft.game.LocationManager.SpecialLocation;
+import me.mani.molecraft.util.BlockMath;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;

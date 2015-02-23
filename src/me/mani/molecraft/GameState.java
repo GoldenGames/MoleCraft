@@ -1,7 +1,7 @@
 package me.mani.molecraft;
 
 public enum GameState {
-	LOBBY, STARTING, INGAME, FINISH;
+	SETUP, LOBBY, WARM_UP, INGAME, SHUTDOWN;
 	
 	private static GameState currentGameState;
 	

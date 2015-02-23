@@ -1,15 +1,16 @@
 package me.mani.molecraft.util;
 
-import net.minecraft.server.v1_7_R4.DataWatcher;
-import net.minecraft.server.v1_7_R4.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_7_R4.PacketPlayOutEntityTeleport;
-import net.minecraft.server.v1_7_R4.PacketPlayOutNamedEntitySpawn;
-import net.minecraft.util.com.mojang.authlib.GameProfile;
+import net.minecraft.server.v1_8_R1.DataWatcher;
+import net.minecraft.server.v1_8_R1.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_8_R1.PacketPlayOutEntityTeleport;
+import net.minecraft.server.v1_8_R1.PacketPlayOutNamedEntitySpawn;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
+
+import com.mojang.authlib.GameProfile;
 
 public class EntityPlayer {
 	

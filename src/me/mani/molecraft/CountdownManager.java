@@ -1,72 +1,65 @@
 package me.mani.molecraft;
 
-import me.mani.molecraft.Message.MessageType;
+import java.util.function.Consumer;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class CountdownManager extends Manager {
 	
 	/**
-    * Startet einen Countdown.
+    * Starts a countdown
     *
-    * @param callback Die Callback Methode
-    * @param from Die Zeit (Anfang)
-    * @param to Die Zeit (Ende)
-    * @param sound Der Sound der abgespielt werden soll
-    * @param pattern Der Text ([time] -> Die verbleibende Zeit) 
+    * @param consumer The consumer where the event will land
+    * @param from The time where the countdown starts
+    * @param to The time where the contdown ends
+    * @param interval the interval between steps
     */
-	public static Countdown createCountdown(CountdownCallback callback, int from, int to, long speed) {
-		Countdown c = new Countdown(from, to, callback);
-		callback.boundToCountdown(c);
-		c.runTaskTimer(MoleCraft.getInstance(), 0L, speed);
+	public static Countdown createCountdown(Consumer<CountdownCountEvent> countConsumer, Consumer<CountdownFinishEvent> finishConsumer, int from, int to, long interval) {
+		Countdown c = new Countdown(from, to, countConsumer, finishConsumer);
+		c.runTaskTimer(MoleCraft.getInstance(), 0L, interval);
 		return c;
 	}
 	
 	public static class Countdown extends BukkitRunnable {
-
-		public Countdown(int from, int to, CountdownCallback callback) {
-			this.from = from;
-			this.to = to;
-			this.callback = callback;
-			
-			this.downcounting = (from > to);
-		}
 		
 		private int from;
 		private int to;
-		private CountdownCallback callback;
-		
+		private Consumer<CountdownCountEvent> countConsumer;
+		private Consumer<CountdownFinishEvent> finishConsumer;	
 		private boolean downcounting;
+		
+		public Countdown(int from, int to, Consumer<CountdownCountEvent> countConsumer, Consumer<CountdownFinishEvent> finishConsumer) {
+			this.from = from;
+			this.to = to;
+			this.countConsumer = countConsumer;
+			this.finishConsumer = finishConsumer;		
+			this.downcounting = (from > to);
+		}
+		
+		
 		
 		@Override
 		public void run() {
 			CountdownCountEvent ev = new CountdownCountEvent(from);
-			callback.onCountdownCount(ev);
-			if (ev.hasMessage())
-				Message.sendAll(MessageType.INFO, ev.getMessage());
-			if (ev.hasSound())
-				Message.playAll(ev.getSound());
-			if (downcounting) {
-				if (from != to)
+			countConsumer.accept(ev);
+			Messenger.sendAll(ev.hasMessage() ? ev.getMessage() : null);
+			Effects.playAll(ev.hasSound() ? ev.getSound() : null);
+			if (from == to)
+				stop(false);
+			else
+				if (downcounting)
 					from--;
 				else
-					stop();
-			}
-			else {
-				if (from != to)
 					from++;
-				else
-					stop();
-			}
 		}	
 		
-		public void stop() {
+		public void stop(boolean force) {
 			this.cancel();
-			callback.onCountdownFinish();
+			if (!force)
+				finishConsumer.accept(new CountdownFinishEvent());
 		}
-		
-		public void forceStop() {
-			this.cancel();
-		}
+
 	}
+	
+	public static class CountdownEvent {}
 }

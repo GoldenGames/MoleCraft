@@ -3,14 +3,14 @@ package me.mani.molecraft.util;
 import java.util.Arrays;
 import java.util.List;
 
-import net.minecraft.server.v1_7_R4.DataWatcher;
-import net.minecraft.server.v1_7_R4.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_7_R4.PacketPlayOutEntityMetadata;
-import net.minecraft.server.v1_7_R4.PacketPlayOutSpawnEntity;
+import net.minecraft.server.v1_8_R1.DataWatcher;
+import net.minecraft.server.v1_8_R1.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_8_R1.PacketPlayOutEntityMetadata;
+import net.minecraft.server.v1_8_R1.PacketPlayOutSpawnEntity;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 import org.bukkit.entity.Player;
 
 public class EntityArmorStand {

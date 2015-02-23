@@ -3,7 +3,7 @@ package me.mani.molecraft.debug;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.mani.molecraft.BlockMath;
+import me.mani.molecraft.util.BlockMath;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;

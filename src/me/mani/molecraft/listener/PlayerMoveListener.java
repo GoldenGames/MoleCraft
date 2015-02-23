@@ -1,8 +1,6 @@
 package me.mani.molecraft.listener;
 
 import me.mani.molecraft.GameState;
-import me.mani.molecraft.Message;
-import me.mani.molecraft.Message.MessageType;
 import me.mani.molecraft.game.GameManager;
 import me.mani.molecraft.util.AdvListener;
 

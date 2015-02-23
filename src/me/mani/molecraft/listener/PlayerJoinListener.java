@@ -1,29 +1,29 @@
 package me.mani.molecraft.listener;
 
-import me.mani.goldenapi.hologram.Hologram;
-import me.mani.goldenapi.hologram.Hologram.HologramLineManager;
+import me.mani.goldenapi.hologram2.Hologram;
+import me.mani.goldenapi.hologram2.Hologram.HologramLineManager;
 import me.mani.goldenapi.util.Title;
 import me.mani.molecraft.GameState;
 import me.mani.molecraft.InventoryManager;
 import me.mani.molecraft.InventoryManager.InventoryType;
-import me.mani.molecraft.Message;
+import me.mani.molecraft.Messenger;
+import me.mani.molecraft.MoleCraftListener;
 import me.mani.molecraft.StatsManager;
 import me.mani.molecraft.game.LobbyManager;
 import me.mani.molecraft.game.LocationManager.SpecialLocation;
-import me.mani.molecraft.util.AdvListener;
 import me.mani.molecraft.util.PlayerStats;
 
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class PlayerJoinListener extends AdvListener {
+public class PlayerJoinListener extends MoleCraftListener {
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent ev) {
 		
-		if (getState() == GameState.LOBBY) {
-			ev.setJoinMessage(Message.PREFIX + "§a[>>>] §e" + ev.getPlayer().getName());
+		if (GameState.getGameState() == GameState.LOBBY) {
+			ev.setJoinMessage(Messenger.getPrefix() + "§a[>>>] §e" + ev.getPlayer().getName());
 			ev.getPlayer().teleport(SpecialLocation.LOBBY_SPAWN);
 			ev.getPlayer().setGameMode(GameMode.ADVENTURE);
 			

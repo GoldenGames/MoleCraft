@@ -1,4 +1,4 @@
-package me.mani.molecraft;
+package me.mani.molecraft.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;

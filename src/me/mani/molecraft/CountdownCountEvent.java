@@ -1,8 +1,10 @@
 package me.mani.molecraft;
 
+import me.mani.molecraft.CountdownManager.CountdownEvent;
+
 import org.bukkit.Sound;
 
-public class CountdownCountEvent {
+public class CountdownCountEvent extends CountdownEvent {
 	
 	public CountdownCountEvent(int currentNumber) {
 		this.currentNumber = currentNumber;

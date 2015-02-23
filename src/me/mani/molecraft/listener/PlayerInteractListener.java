@@ -1,12 +1,10 @@
 package me.mani.molecraft.listener;
 
 import me.mani.molecraft.GameState;
-import me.mani.molecraft.Message;
-import me.mani.molecraft.Message.MessageType;
+import me.mani.molecraft.Messenger;
+import me.mani.molecraft.MoleCraftListener;
 import me.mani.molecraft.game.LocationManager.SpecialLocation;
-import me.mani.molecraft.util.AdvListener;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,15 +12,14 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class PlayerInteractListener extends AdvListener {
+public class PlayerInteractListener extends MoleCraftListener {
 	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent ev) {
 		Player p = ev.getPlayer();
 		
-		// Item Interact in Lobby
-		
-		if (getState() != GameState.LOBBY)
+		// Checks if the item is used in lobby phase, if so it will be continued
+		if (GameState.getGameState() != GameState.LOBBY)
 			return;
 		
 		if (ev.getAction() == Action.RIGHT_CLICK_AIR || ev.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -30,22 +27,24 @@ public class PlayerInteractListener extends AdvListener {
 			if (item == null || item.getType() == null)
 				return;
 				
-			// Paper - Explanation
-			
+			// The paper item gives an explanation of the game		
 			if (item.getType() == Material.PAPER) {
 				new TutorialThread(p, item).start();
-				p.getInventory().removeItem(item);
 			}
 			
-			// Firework - Teleport to Parkour
-			
+			// The firework item teleports the player to the parkour
 			if (item.getType() == Material.FIREWORK)
-				p.teleport(SpecialLocation.PARKOUR_SPAWN);			
+				p.teleport(SpecialLocation.PARKOUR_SPAWN);
 		}
-		
 		ev.setCancelled(true);	
 	}
 
+	/**
+	 * This thread gives the player an short explanation of the gamemode
+	 * 
+	 * @author 1999mani
+	 *
+	 */
 	public class TutorialThread extends Thread {
 		
 		private Player p;
@@ -59,17 +58,18 @@ public class PlayerInteractListener extends AdvListener {
 		@Override
 		public void run() {
 			try {
-				Message.send(p, MessageType.INFO, "In MoleCraft geht es darum sich durch");
-				Message.send(p, MessageType.NO_PREFIX.custom(ChatColor.YELLOW), "einen riesigen Erdblock zu graben, die");
-				Message.send(p, MessageType.NO_PREFIX.custom(ChatColor.YELLOW), "gegnerischen Spieler auszuschalten");
-				Message.send(p, MessageType.NO_PREFIX.custom(ChatColor.YELLOW), "und als letzter zu überleben.\n ");
+				p.getInventory().remove(item);
+				Messenger.send(p, "In MoleCraft geht es darum sich durch");
+				Messenger.send(p, "einen riesigen Erdblock zu graben, die");
+				Messenger.send(p, "gegnerischen Spieler auszuschalten");
+				Messenger.send(p, "und als letzter zu überleben.\n ");
 				sleep(4000);
-				Message.send(p, MessageType.INFO, "Während du gräbst kannst du Kisten finden.");
-				Message.send(p, MessageType.NO_PREFIX.custom(ChatColor.YELLOW), "Diese werden dir bei deiner Reise");
-				Message.send(p, MessageType.NO_PREFIX.custom(ChatColor.YELLOW), "durch die Erde sicher behilflich sein!\n ");
+				Messenger.send(p, "Während du gräbst kannst du Kisten finden.");
+				Messenger.send(p, "Diese werden dir bei deiner Reise");
+				Messenger.send(p, "durch die Erde sicher behilflich sein!\n ");
 				sleep(4000);
-				Message.send(p, MessageType.INFO, "Das wäre es eigentlich auch schon und jetzt Viel");
-				Message.send(p, MessageType.NO_PREFIX.custom(ChatColor.YELLOW), "Glück und natürlich Vergnügen bei §lMoleCraft\n ");
+				Messenger.send(p, "Das wäre es eigentlich auch schon und jetzt Viel");
+				Messenger.send(p, "Glück und natürlich Vergnügen bei §lMoleCraft\n ");
 				sleep(1000);
 				p.getInventory().setItem(0, item);
 				return;
@@ -78,7 +78,5 @@ public class PlayerInteractListener extends AdvListener {
 				return;
 			}
 		}
-		
 	}
-	
 }
