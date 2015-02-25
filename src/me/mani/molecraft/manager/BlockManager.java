@@ -1,4 +1,4 @@
-package me.mani.molecraft.config;
+package me.mani.molecraft.manager;
 
 import java.util.ArrayList;
 import java.util.List;

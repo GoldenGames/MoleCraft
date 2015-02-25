@@ -2,7 +2,7 @@ package me.mani.molecraft.listener;
 
 import me.mani.molecraft.GameState;
 import me.mani.molecraft.MoleCraftListener;
-import me.mani.molecraft.config.BlockManager;
+import me.mani.molecraft.manager.BlockManager;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;

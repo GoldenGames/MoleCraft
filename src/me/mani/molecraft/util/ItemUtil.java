@@ -13,74 +13,60 @@ import org.bukkit.potion.PotionType;
 
 public class ItemUtil {
 
-	public static CustomItem customItem(Material mat, int amount, String name, String...  lore) {
-		ItemStack item = new ItemStack(mat, amount);
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(name);
-		meta.setLore(Arrays.asList(lore));
-		item.setItemMeta(meta);
-		return new CustomItem(item);
+	public static ItemStack createItem(ItemStack itemStack, String displayName) {
+		return createItem(itemStack, displayName, new String[]{});
 	}
 	
-	public static CustomItem customItem(Material mat, int amount, String name) {
-		ItemStack item = new ItemStack(mat, amount);
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(name);
-		item.setItemMeta(meta);
-		return new CustomItem(item);
+	public static ItemStack createItem(ItemStack itemStack, String displayName, String... lore) {
+		ItemMeta itemMeta = itemStack.getItemMeta();
+		itemMeta.setDisplayName(displayName);
+		itemMeta.setLore(Arrays.asList(lore));
+		itemMeta.spigot().setUnbreakable(true);
+		itemStack.setItemMeta(itemMeta);
+		return itemStack;
 	}
 	
-	public static ItemStack customItem(Material mat, int amount, String name, DyeColor color) {
-		ItemStack item = new ItemStack(mat, amount);
-		LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
-		meta.setDisplayName(name);
-		meta.setColor(color.getColor());
-		item.setItemMeta(meta);
-		return item;
+	public static ItemStack createItem(ItemStack itemStack, String displayName, Enchantment enchantment, int level) {
+		return createItem(itemStack, displayName, enchantment, level, new String[]{});
 	}
 	
-	public static ItemStack applyName(ItemStack item, String name) {
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(name);
-		item.setItemMeta(meta);
-		return item;
+	public static ItemStack createItem(ItemStack itemStack, String displayName, Enchantment enchantment, int level, String... lore) {
+		ItemMeta itemMeta = createItem(itemStack, displayName, lore).getItemMeta();
+		if (enchantment != null)
+			itemMeta.addEnchant(enchantment, level, true);
+		itemMeta.spigot().setUnbreakable(true);
+		itemStack.setItemMeta(itemMeta);
+		return itemStack;
 	}
 	
-	public static class CustomItem {
-		
-		private ItemStack item;
-		
-		public CustomItem(ItemStack item) {
-			this.item = item;
-		}
-		
-		public CustomItem enchant(Enchantment ench, int lvl) {
-			item.addEnchantment(ench, lvl);
-			return this;
-		}
-		
-		public ItemStack toPotion(PotionType type, int level) {
-			return toPotion(type, level, false, false);
-		}
-		
-		public ItemStack toPotion(PotionType type, int level, boolean extendet) {
-			return toPotion(type, level, extendet, false);
-		}
-		
-		public ItemStack toPotion(PotionType type, int level, boolean extendet, boolean splash) {
-			item.setType(Material.POTION);
-			Potion potion = new Potion(type, level);
-			if (extendet)
-				potion.extend();
-			potion.setSplash(splash);
-			potion.apply(item);
-			return item;
-		}
-		
-		public ItemStack toItemStack() {
-			return item;
-		}
-		
+	public static ItemStack createItem(ItemStack itemStack, String displayName, PotionType potionType, int level, boolean extendet, boolean splash) {
+		return createItem(itemStack, displayName, potionType, level, extendet, splash, new String[]{});
+	}
+	
+	public static ItemStack createItem(ItemStack itemStack, String displayName, PotionType potionType, int level, boolean extendet, boolean splash, String... lore) {
+		itemStack = createItem(itemStack, displayName, lore);
+		if (itemStack.getType() != Material.POTION)
+			itemStack.setType(Material.POTION);
+		Potion potion = new Potion(potionType, level);
+		if (extendet)
+			potion.extend();
+		potion.setSplash(splash);
+		potion.apply(itemStack);
+		return itemStack;
+	}
+	
+	public static ItemStack createItem(ItemStack itemStack, String displayName, DyeColor dyeColor) {
+		return createItem(itemStack, displayName, dyeColor, new String[]{});
+	}
+	
+	public static ItemStack createItem(ItemStack itemStack, String displayName, DyeColor dyeColor, String... lore) {
+		LeatherArmorMeta itemMeta = (LeatherArmorMeta) itemStack.getItemMeta();
+		itemMeta.setDisplayName(displayName);
+		itemMeta.setLore(Arrays.asList(lore));
+		itemMeta.setColor(dyeColor.getColor());
+		itemMeta.spigot().setUnbreakable(true);
+		itemStack.setItemMeta(itemMeta);
+		return itemStack;
 	}
 	
 }

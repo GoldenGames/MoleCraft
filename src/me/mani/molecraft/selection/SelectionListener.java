@@ -1,14 +1,15 @@
-package me.mani.molecraft.debug;
+package me.mani.molecraft.selection;
 
-import me.mani.molecraft.debug.DebugManager.MessageType;
+import me.mani.molecraft.MoleCraftListener;
+import me.mani.molecraft.manager.DebugManager;
+import me.mani.molecraft.manager.DebugManager.MessageType;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class SelectionListener implements Listener {
+public class SelectionListener extends MoleCraftListener {
 
 	private SelectionTool tool;
 	

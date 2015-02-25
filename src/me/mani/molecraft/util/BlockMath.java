@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -59,6 +60,25 @@ public class BlockMath {
 				for (int z = minZ; z < maxZ; z++)
 					allLocations.add(new Location(world, x, y, z));
 		return allLocations;
+	}
+	
+	public static List<Chunk> getChunks(Location loc1, Location loc2) {
+		if (!loc1.getWorld().equals(loc2.getWorld()))
+			return null;
+		
+		World world = loc1.getWorld();
+		
+		List<Chunk> allChunks = new ArrayList<>(); 
+		
+		int minX = Math.min(loc1.getBlockX(), loc2.getBlockX());
+		int minZ = Math.min(loc1.getBlockZ(), loc2.getBlockZ());
+		int maxX = Math.max(loc1.getBlockX(), loc2.getBlockX());
+		int maxZ = Math.max(loc1.getBlockZ(), loc2.getBlockZ());
+		
+		for (int x = minX / 16; x < maxX / 16; x++)
+			for (int z = minZ / 16; z < maxZ / 16; z++)
+				allChunks.add(world.getChunkAt(x, z));
+		return allChunks;
 	}
 	
 	public static int countBlocks(Location loc1, Location loc2) {

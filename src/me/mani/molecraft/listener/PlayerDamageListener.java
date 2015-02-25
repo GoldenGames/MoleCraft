@@ -2,7 +2,7 @@ package me.mani.molecraft.listener;
 
 import me.mani.molecraft.GameState;
 import me.mani.molecraft.MoleCraftListener;
-import me.mani.molecraft.game.GameManager;
+import me.mani.molecraft.manager.GameManager;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

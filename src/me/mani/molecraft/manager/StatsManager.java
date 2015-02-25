@@ -1,34 +1,33 @@
-package me.mani.molecraft;
+package me.mani.molecraft.manager;
 
 import java.util.HashMap;
 import java.util.UUID;
 
-import me.mani.goldenapi.GoldenAPI;
 import me.mani.goldenapi.mysql.ConvertUtil;
 import me.mani.goldenapi.mysql.DatabaseManager;
-import me.mani.molecraft.setup.SetupManager;
 import me.mani.molecraft.util.PlayerStats;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
 import org.bukkit.entity.Player;
 
-public class StatsManager extends Manager {
-	
-	private static DatabaseManager manager;
+public class StatsManager {
+
 	private static final String STATS_TEMPLATE = "stats";
 	
-	private static HashMap<Player, PlayerStats> allPlayerStats = new HashMap<>();
+	private DatabaseManager sql;
+	private HashMap<Player, PlayerStats> playerStats = new HashMap<>();
 	
-	public StatsManager() {
-		manager = GoldenAPI.getManager();
+	public StatsManager(DatabaseManager sql) {
+		// TODO: Make it used, disabled for time
 	}
 	
 	public void setupStatsBoard() {
 		for (int i = 1; i < 5; i++) {
-			Location loc = ConvertUtil.toLocation((String) manager.get("molecraft", "setting", STATS_TEMPLATE + i, "value"), SetupManager.getWorld());
+			Location loc = ConvertUtil.toLocation((String) sql.get("molecraft", "setting", STATS_TEMPLATE + i, "value"), Bukkit.getWorld("world"));
 			if (loc.getBlock().getType() != Material.WALL_SIGN || getPlayerStats(i) == null)
 				continue;
 			Sign sign = (Sign) loc.getBlock().getState();
@@ -47,25 +46,25 @@ public class StatsManager extends Manager {
 		}
 	}
 	
-	public static void addPlayerStats(Player p) {
+	public void addPlayerStats(Player p) {
 		PlayerStats stats = new PlayerStats(p);
 		stats.sendData();
-		allPlayerStats.put(p, stats);
+		playerStats.put(p, stats);
 	}
 	
-	public static PlayerStats getPlayerStats(Player p) {
-		return allPlayerStats.get(p);
+	public PlayerStats getPlayerStats(Player p) {
+		return playerStats.get(p);
 	}
 	
-	public static PlayerStats getPlayerStats(UUID uuid) {
-		for (PlayerStats stats : allPlayerStats.values())
+	public PlayerStats getPlayerStats(UUID uuid) {
+		for (PlayerStats stats : playerStats.values())
 			if (stats.getUUID().equals(uuid))
 				return stats;
 		return null;
 	}
 	
-	public static PlayerStats getPlayerStats(int rank) {
-		String raw = ((String) manager.get(PlayerStats.TABLE, PlayerStats.WINS_ALIAS, rank, true, PlayerStats.UUID_ALIAS));
+	public PlayerStats getPlayerStats(int rank) {
+		String raw = ((String) sql.get(PlayerStats.TABLE, PlayerStats.WINS_ALIAS, rank, true, PlayerStats.UUID_ALIAS));
 		try {
 			if (raw == null || UUID.fromString(raw) == null)
 				return null;
@@ -76,7 +75,7 @@ public class StatsManager extends Manager {
 	}
 
 	public void sendAll() {
-		for (PlayerStats stats : allPlayerStats.values())
+		for (PlayerStats stats : playerStats.values())
 			stats.sendData();
 	}
 }

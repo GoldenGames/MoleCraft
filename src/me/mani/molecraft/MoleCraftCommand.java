@@ -1,5 +1,7 @@
 package me.mani.molecraft;
 
+import me.mani.molecraft.manager.GameManager;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -7,6 +9,7 @@ import org.bukkit.entity.Player;
 
 public abstract class MoleCraftCommand implements CommandExecutor {
 	
+	protected GameManager gameManager = MoleCraft.getInstance().gameManager;
 	private String label;
 	private boolean playerOnly;
 	

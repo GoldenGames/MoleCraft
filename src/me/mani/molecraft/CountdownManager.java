@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class CountdownManager extends Manager {
+public class CountdownManager {
 	
 	/**
     * Starts a countdown

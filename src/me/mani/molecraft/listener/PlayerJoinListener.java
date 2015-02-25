@@ -4,13 +4,9 @@ import me.mani.goldenapi.hologram2.Hologram;
 import me.mani.goldenapi.hologram2.Hologram.HologramLineManager;
 import me.mani.goldenapi.util.Title;
 import me.mani.molecraft.GameState;
-import me.mani.molecraft.InventoryManager;
 import me.mani.molecraft.InventoryManager.InventoryType;
 import me.mani.molecraft.Messenger;
 import me.mani.molecraft.MoleCraftListener;
-import me.mani.molecraft.StatsManager;
-import me.mani.molecraft.game.LobbyManager;
-import me.mani.molecraft.game.LocationManager.SpecialLocation;
 import me.mani.molecraft.util.PlayerStats;
 
 import org.bukkit.GameMode;
@@ -24,16 +20,17 @@ public class PlayerJoinListener extends MoleCraftListener {
 		
 		if (GameState.getGameState() == GameState.LOBBY) {
 			ev.setJoinMessage(Messenger.getPrefix() + "§a[>>>] §e" + ev.getPlayer().getName());
-			ev.getPlayer().teleport(SpecialLocation.LOBBY_SPAWN);
+			ev.getPlayer().teleport(gameManager.locationManager.LOBBY_SPAWN);
 			ev.getPlayer().setGameMode(GameMode.ADVENTURE);
 			
-			InventoryManager.setInventory(InventoryType.LOBBY, ev.getPlayer());
-			StatsManager.addPlayerStats(ev.getPlayer());
-			LobbyManager.addPlayer();
+			gameManager.inventoryManager.setInventory(ev.getPlayer(), InventoryType.LOBBY);
+			gameManager.statsManager.addPlayerStats(ev.getPlayer());
 			
-			PlayerStats stats = StatsManager.getPlayerStats(ev.getPlayer());
+			gameManager.lobbyPlayerManager.addPlayer();
 			
-			Hologram hologram = new Hologram(SpecialLocation.STATS_DISPLAY);
+			PlayerStats stats = gameManager.statsManager.getPlayerStats(ev.getPlayer());
+			
+			Hologram hologram = new Hologram(gameManager.locationManager.STATS_DISPLAY);
 			HologramLineManager lm = hologram.getLineManager();
 			lm.addLine("§7-=-=---=|=---=-=-");
 			lm.addLine("§eDeine Stats:");

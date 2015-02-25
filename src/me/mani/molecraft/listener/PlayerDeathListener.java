@@ -2,8 +2,8 @@ package me.mani.molecraft.listener;
 
 import me.mani.molecraft.Messenger;
 import me.mani.molecraft.MoleCraftListener;
-import me.mani.molecraft.game.GameManager;
 import me.mani.molecraft.listener.StatsEvent.StatsEventType;
+import me.mani.molecraft.manager.GameManager;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -37,8 +37,8 @@ public class PlayerDeathListener extends MoleCraftListener {
 		);
 		
 		// Change the deaths and games playerstat by 1		
-		StatsListener.onStatsChange(new StatsEvent(p, StatsEventType.DEATH, 1));
-		StatsListener.onStatsChange(new StatsEvent(p, StatsEventType.GAME, 1));
+		StatsListener.onStatsChange(gameManager, new StatsEvent(p, StatsEventType.DEATH, 1));
+		StatsListener.onStatsChange(gameManager, new StatsEvent(p, StatsEventType.GAME, 1));
 		
 		// Checkes if the player had been killed	
 		if (p.getKiller() == null)
@@ -55,14 +55,14 @@ public class PlayerDeathListener extends MoleCraftListener {
 		);
 		
 		// Change the kills playerstat by 1	
-		StatsListener.onStatsChange(new StatsEvent(killer, StatsEventType.KILL, 1));
+		StatsListener.onStatsChange(gameManager, new StatsEvent(killer, StatsEventType.KILL, 1));
 		
 		// Checks if there is a winner		
 		if (GameManager.getPlayerLeft().size() > 1)
 			return;
 		
 		// Change the wins playerstat by 1		
-		StatsListener.onStatsChange(new StatsEvent(killer, StatsEventType.WIN, 1));
+		StatsListener.onStatsChange(gameManager, new StatsEvent(killer, StatsEventType.WIN, 1));
 		
 		// Let the game finish 
 		// TODO: Put this somewhere else	

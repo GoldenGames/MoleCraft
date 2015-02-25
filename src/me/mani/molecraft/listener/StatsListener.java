@@ -1,12 +1,12 @@
 package me.mani.molecraft.listener;
 
-import me.mani.molecraft.StatsManager;
+import me.mani.molecraft.manager.GameManager;
 import me.mani.molecraft.util.PlayerStats;
 
 public class StatsListener {
 	
-	public static void onStatsChange(StatsEvent ev) {
-		PlayerStats stats = StatsManager.getPlayerStats(ev.getUUID());
+	public static void onStatsChange(GameManager gameManager, StatsEvent ev) {
+		PlayerStats stats = gameManager.statsManager.getPlayerStats(ev.getUUID());
 		if (stats == null)
 			return;
 		switch (ev.getType()) {

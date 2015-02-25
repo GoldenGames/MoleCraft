@@ -1,7 +1,6 @@
 package me.mani.molecraft.commands;
 
 import me.mani.molecraft.MoleCraftCommand;
-import me.mani.molecraft.StatsManager;
 import me.mani.molecraft.util.PlayerStats;
 
 import org.bukkit.entity.Player;
@@ -14,7 +13,7 @@ public class StatsCommand extends MoleCraftCommand {
 
 	@Override
 	public String onCommand(Player p, String[] args) {
-		PlayerStats stats = StatsManager.getPlayerStats(p);
+		PlayerStats stats = gameManager.statsManager.getPlayerStats(p);
 		return 
 			"§eDeine Stats:\n" +
 			"Kills: §e" + stats.getKills() + "\n" +

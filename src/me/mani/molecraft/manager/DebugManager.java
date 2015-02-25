@@ -1,22 +1,25 @@
-package me.mani.molecraft.debug;
+package me.mani.molecraft.manager;
 
-import me.mani.molecraft.Manager;
+import me.mani.molecraft.MoleCraft;
+import me.mani.molecraft.selection.LocationSetCommand;
+import me.mani.molecraft.selection.SelectionListener;
+import me.mani.molecraft.selection.SelectionSaveCommand;
+import me.mani.molecraft.selection.SelectionTool;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class DebugManager extends Manager {
+public class DebugManager {
+	
+	private static final String PREFIX = "§7[§bMoleCraft§7] ";
 
 	private static SelectionTool tool;
 	
-	private static final String PREFIX = "§7[§bMoleCraft§7] ";
-	
-	public DebugManager() {
+	public DebugManager(MoleCraft moleCraft) {
 		tool = new SelectionTool();
-		Bukkit.getPluginManager().registerEvents(new SelectionListener(tool), getPlugin());
-		getPlugin().getCommand("save").setExecutor(new SelectionSaveCommand());
-		getPlugin().getCommand("setpoint").setExecutor(new LocationSetCommand());
+		new SelectionListener(tool);
+		new SelectionSaveCommand();
+		new LocationSetCommand();
 	}
 	
 	public static SelectionTool getSelectionTool() {

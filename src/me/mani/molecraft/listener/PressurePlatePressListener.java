@@ -3,8 +3,8 @@ package me.mani.molecraft.listener;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.mani.molecraft.MoleCraftListener;
 import me.mani.molecraft.animation.FireFontain;
-import me.mani.molecraft.util.AdvListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,7 +14,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 
-public class PressurePlatePressListener extends AdvListener {
+public class PressurePlatePressListener extends MoleCraftListener {
 	
 	private List<Player> pressed = new ArrayList<>();
 	

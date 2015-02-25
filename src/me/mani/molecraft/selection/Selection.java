@@ -1,4 +1,4 @@
-package me.mani.molecraft.debug;
+package me.mani.molecraft.selection;
 
 import java.util.ArrayList;
 import java.util.List;

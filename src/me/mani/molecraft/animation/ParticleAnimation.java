@@ -1,19 +1,15 @@
 package me.mani.molecraft.animation;
 
-import me.mani.molecraft.util.ParticleEffect.ParticleEffectType;
+import org.bukkit.Effect;
 
 public abstract class ParticleAnimation {
 	
-	private ParticleEffectType effectType;
+	protected Effect effectType;
 	
-	public ParticleAnimation(ParticleEffectType effectType) {
+	public ParticleAnimation(Effect effectType) {
 		this.effectType = effectType;
 	}
 	
 	public abstract void run( /* Maybe add stuff here */ );
-	
-	public ParticleEffectType getType() {
-		return effectType;
-	}
 
 }

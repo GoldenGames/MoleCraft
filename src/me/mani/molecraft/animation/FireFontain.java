@@ -1,11 +1,10 @@
 package me.mani.molecraft.animation;
 
 import me.mani.goldenapi.GoldenAPI;
-import me.mani.molecraft.util.ParticleEffect;
-import me.mani.molecraft.util.ParticleEffect.Offset;
-import me.mani.molecraft.util.ParticleEffect.ParticleEffectType;
+import me.mani.molecraft.Effects;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -16,7 +15,7 @@ public class FireFontain extends TimedParticleAnimation {
 	private BukkitTask task;
 	
 	public FireFontain(Location loc) {
-		super(ParticleEffectType.LAVA, 6, 3);
+		super(Effect.LAVA_POP, 6, 3);
 		this.loc = loc;
 	}
 	
@@ -31,7 +30,8 @@ public class FireFontain extends TimedParticleAnimation {
 				if (i == getTimes())
 					task.cancel();
 				
-				ParticleEffect.broadcast(getType(), loc, new Offset(0.5f, 0.5f, 0.5f), 0, 25);
+				Effects.showAll(effectType, loc);
+//				broadcast(getType(), loc, new Offset(0.5f, 0.5f, 0.5f), 0, 25);
 				loc.add(0, 0.5, 0);
 				
 				i++;

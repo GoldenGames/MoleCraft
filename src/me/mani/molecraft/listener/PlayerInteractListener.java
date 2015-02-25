@@ -3,7 +3,6 @@ package me.mani.molecraft.listener;
 import me.mani.molecraft.GameState;
 import me.mani.molecraft.Messenger;
 import me.mani.molecraft.MoleCraftListener;
-import me.mani.molecraft.game.LocationManager.SpecialLocation;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -34,7 +33,7 @@ public class PlayerInteractListener extends MoleCraftListener {
 			
 			// The firework item teleports the player to the parkour
 			if (item.getType() == Material.FIREWORK)
-				p.teleport(SpecialLocation.PARKOUR_SPAWN);
+				p.teleport(gameManager.locationManager.PARKOUR_SPAWN);
 		}
 		ev.setCancelled(true);	
 	}

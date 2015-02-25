@@ -2,12 +2,15 @@ package me.mani.molecraft;
 
 import java.util.function.Consumer;
 
+import me.mani.molecraft.manager.GameManager;
+
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 
 public class MoleCraftListener implements Listener {
 	
+	protected GameManager gameManager = MoleCraft.getInstance().gameManager;
 	private static Consumer<Event> currentConsumer;
 	
 	public MoleCraftListener() {

@@ -1,13 +1,13 @@
 package me.mani.molecraft.animation;
 
-import me.mani.molecraft.util.ParticleEffect.ParticleEffectType;
+import org.bukkit.Effect;
 
 public class TimedParticleAnimation extends ParticleAnimation {
 
 	private int times;
 	private long delay;
 	
-	public TimedParticleAnimation(ParticleEffectType effectType, int times, long delay) {
+	public TimedParticleAnimation(Effect effectType, int times, long delay) {
 		super(effectType);
 		this.times = times;
 		this.delay = delay;

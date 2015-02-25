@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import me.mani.molecraft.GameState;
 import me.mani.molecraft.MoleCraftListener;
-import me.mani.molecraft.config.BlockManager;
-import me.mani.molecraft.game.GameManager;
+import me.mani.molecraft.manager.BlockManager;
+import me.mani.molecraft.manager.GameManager;
 import me.mani.molecraft.util.WoolLocation;
 
 import org.bukkit.Material;

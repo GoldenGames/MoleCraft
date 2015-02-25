@@ -1,4 +1,4 @@
-package me.mani.molecraft.debug;
+package me.mani.molecraft.selection;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
