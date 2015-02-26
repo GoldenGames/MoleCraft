@@ -55,13 +55,19 @@ public class SetupManager {
 	public boolean setup() {
 		try {
 			arenaMap = loadArenaMap();
+			System.out.println("Loaded Map");
 			sql = loadSQL();
+			System.out.println("Loaded MySQL");
 			locationManager = loadLocationManager();
+			System.out.println("Loaded Locations");
 			loadChunks();
+			System.out.println("Loaded Chunks");
 			chestManager = addChests(30);
 			chestManager.fillAll();
+			System.out.println("Placed and filled chests");
 			registerListener();
 			registerCommands();
+			System.out.println("Registered listeners and commands");
 		}
 		catch (SetupException e) {
 			e.printStackTrace();

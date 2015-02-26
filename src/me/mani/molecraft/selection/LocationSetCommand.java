@@ -1,5 +1,6 @@
 package me.mani.molecraft.selection;
 
+import me.mani.goldenapi.mysql.ConvertUtil;
 import me.mani.molecraft.MoleCraftCommand;
 import me.mani.molecraft.manager.TeamManager.Team;
 
@@ -24,8 +25,9 @@ public class LocationSetCommand extends MoleCraftCommand {
 		
 		if (!(0 <= id && id <= 7))
 			return "Die Id muss zwischen 0 und 7 sein";
-		
-		// TODO: Add some tricky thing to save the location
+
+		debugManager.getMoleCraft().getConfig().set("spawn" + id, ConvertUtil.toString(p.getLocation()));
+		debugManager.getMoleCraft().saveConfig();	
 		
 		return "Location gesetzt! §7[" + Team.getById(id) + "] (" + id + ")";
 	}

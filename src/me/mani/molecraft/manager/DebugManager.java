@@ -9,13 +9,16 @@ import me.mani.molecraft.selection.SelectionTool;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class DebugManager {
+public class DebugManager implements MainManager {
 	
 	private static final String PREFIX = "§7[§bMoleCraft§7] ";
 
 	private static SelectionTool tool;
+
+	private MoleCraft moleCraft;
 	
 	public DebugManager(MoleCraft moleCraft) {
+		this.moleCraft = moleCraft;
 		tool = new SelectionTool();
 		new SelectionListener(tool);
 		new SelectionSaveCommand();
@@ -50,5 +53,10 @@ public class DebugManager {
 		public ChatColor getChatColor() {
 			return color;
 		}
+	}
+
+	@Override
+	public MoleCraft getMoleCraft() {
+		return moleCraft;
 	}
 }

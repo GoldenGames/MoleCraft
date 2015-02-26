@@ -17,9 +17,9 @@ public class MoleCraft extends JavaPlugin {
 	public static final String SETTING_ALIAS = "setting";
 	public static final String VALUE_ALIAS = "value";
 	
+	public DebugManager debugManager;
 	public GameManager gameManager;
 	
-	private SetupManager setupManager;
 	private StatsManager statsManager;
 	
 	@Override
@@ -30,24 +30,16 @@ public class MoleCraft extends JavaPlugin {
 		getConfig().addDefault("debug", true);
 		getConfig().options().copyDefaults(true);
 		saveConfig();
-					
-		if (getConfig().getBoolean("debug")) {
-			
-			// Start Debugging
-			new DebugManager(this);
-			return;
-		}
-		
-		// Actually starts setup followed by game
 		
 		for (World w : Bukkit.getWorlds())
 			w.setAutoSave(false);
 		
-		setupManager = new SetupManager(this);
-		if (setupManager.setup())
-			gameManager = new GameManager(setupManager);
-//		else
-			// TODO: Offline, needs checking 
+		if (getConfig().getBoolean("debug"))
+			debugManager = new DebugManager(this);
+		else {
+			gameManager = new GameManager(this);
+			gameManager.startBootstrap();
+		}
 		
 //		statsManager = new StatsManager();
 //		statsManager.setupStatsBoard();

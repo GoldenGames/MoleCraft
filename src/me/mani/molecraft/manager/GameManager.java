@@ -11,6 +11,7 @@ import me.mani.molecraft.GameState;
 import me.mani.molecraft.InventoryManager;
 import me.mani.molecraft.InventoryManager.InventoryType;
 import me.mani.molecraft.Messenger;
+import me.mani.molecraft.MoleCraft;
 import me.mani.molecraft.manager.TeamManager.Team;
 import me.mani.molecraft.util.WoolLocation;
 
@@ -22,8 +23,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class GameManager {
+public class GameManager implements MainManager {
 
+	private MoleCraft moleCraft;
+	private SetupManager setupManager;
 	public LobbyPlayerManager lobbyPlayerManager;
 	public LocationManager locationManager;
 	public TeamManager teamManager;
@@ -35,17 +38,23 @@ public class GameManager {
 	public static HashMap<Player, List<WoolLocation>> destroidWool = new HashMap<>();
 	private static List<Player> ingamePlayer = new ArrayList<>();
 	
-	public GameManager(SetupManager setupManager) {
-		GameState.setGameState(GameState.LOBBY);
-		
+	public GameManager(MoleCraft moleCraft) {
+		this.moleCraft = moleCraft;
+	}
+	
+	public void startBootstrap() {
+		setupManager = new SetupManager(moleCraft);
+		if (!setupManager.setup()) {
+			System.out.println("Failed to start molecraft.");
+			// Game needs to be checked here
+		}
+				
 		locationManager = setupManager.getLocationManager();
 		teamManager = new TeamManager();
 		inventoryManager = new InventoryManager(this);
 		lobbyPlayerManager = new LobbyPlayerManager(this);
-	}
-	
-	public void startBootstrap() {
 		
+		GameState.setGameState(GameState.LOBBY);
 	}
 	
 	public void stopBootstrap() {
@@ -149,5 +158,10 @@ public class GameManager {
 			woolLoc.getLocation().getBlock().setType(Material.WOOL);
 			woolLoc.getLocation().getBlock().setData(woolLoc.getColor());
 		}
+	}
+
+	@Override
+	public MoleCraft getMoleCraft() {
+		return moleCraft;
 	}	
 }
