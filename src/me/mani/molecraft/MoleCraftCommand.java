@@ -11,21 +11,16 @@ import org.bukkit.entity.Player;
 
 public abstract class MoleCraftCommand implements CommandExecutor {
 	
-	private MainManager mainManager = MoleCraft.getInstance().gameManager == null ? MoleCraft.getInstance().gameManager : MoleCraft.getInstance().debugManager;
-	/** Can only be used if a game manager is active, Otherwise it's null */
-	protected GameManager gameManager = mainManager instanceof GameManager ? (GameManager) mainManager : null;
-	/** Can only be used if a debug manager is active. Otherwise it's null */
-	protected DebugManager debugManager = mainManager instanceof DebugManager ? (DebugManager) mainManager : null;
+	protected GameManager gameManager;
+	protected DebugManager debugManager;
 	private String label;
-	private boolean playerOnly;
 	
-	public MoleCraftCommand(String label) {
-		this(label, false);
-	}
-	
-	public MoleCraftCommand(String label, boolean playerOnly) {
+	public MoleCraftCommand(String label, MainManager mainManager) {
 		this.label = label;
-		this.playerOnly = playerOnly;
+		if (mainManager instanceof GameManager)
+			this.gameManager = (GameManager) mainManager;
+		else if (mainManager instanceof DebugManager)
+			this.debugManager = (DebugManager) mainManager;
 		register();
 	}
 	
@@ -36,7 +31,7 @@ public abstract class MoleCraftCommand implements CommandExecutor {
 	@Deprecated
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (playerOnly && !(sender instanceof Player))
+		if (!(sender instanceof Player))
 			Messenger.sendAll(onCommand(null, args));
 		else
 			Messenger.send((Player) sender, (onCommand((Player) sender, args)));		

@@ -5,6 +5,7 @@ import java.util.List;
 
 import me.mani.molecraft.MoleCraftListener;
 import me.mani.molecraft.animation.FireFontain;
+import me.mani.molecraft.manager.MainManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,6 +17,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class PressurePlatePressListener extends MoleCraftListener {
 	
+	public PressurePlatePressListener(MainManager mainManager) {
+		super(mainManager);
+	}
+
 	private List<Player> pressed = new ArrayList<>();
 	
 	@EventHandler

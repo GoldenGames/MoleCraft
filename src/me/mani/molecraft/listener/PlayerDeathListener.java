@@ -4,6 +4,7 @@ import me.mani.molecraft.Messenger;
 import me.mani.molecraft.MoleCraftListener;
 import me.mani.molecraft.listener.StatsEvent.StatsEventType;
 import me.mani.molecraft.manager.GameManager;
+import me.mani.molecraft.manager.MainManager;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -14,6 +15,10 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class PlayerDeathListener extends MoleCraftListener {
 	
+	public PlayerDeathListener(MainManager mainManager) {
+		super(mainManager);
+	}
+
 	@EventHandler
 	public void onDeath(PlayerDeathEvent ev) {
 		Player p = ev.getEntity();

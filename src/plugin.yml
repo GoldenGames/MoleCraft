@@ -7,3 +7,4 @@ commands:
   save:
   setpoint:
   stats:
+  world:

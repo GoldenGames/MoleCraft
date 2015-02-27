@@ -2,6 +2,7 @@ package me.mani.molecraft.selection;
 
 import me.mani.goldenapi.mysql.ConvertUtil;
 import me.mani.molecraft.MoleCraftCommand;
+import me.mani.molecraft.manager.MainManager;
 import me.mani.molecraft.manager.TeamManager.Team;
 
 import org.apache.commons.lang.math.NumberUtils;
@@ -9,8 +10,8 @@ import org.bukkit.entity.Player;
 
 public class LocationSetCommand extends MoleCraftCommand {
 
-	public LocationSetCommand() {
-		super("setpoint", true);
+	public LocationSetCommand(MainManager mainManager) {
+		super("setpoint", mainManager);
 	}
 
 	@Override
@@ -25,7 +26,7 @@ public class LocationSetCommand extends MoleCraftCommand {
 		
 		if (!(0 <= id && id <= 7))
 			return "Die Id muss zwischen 0 und 7 sein";
-
+		
 		debugManager.getMoleCraft().getConfig().set("spawn" + id, ConvertUtil.toString(p.getLocation()));
 		debugManager.getMoleCraft().saveConfig();	
 		

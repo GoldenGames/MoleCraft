@@ -7,6 +7,7 @@ import me.mani.molecraft.GameState;
 import me.mani.molecraft.InventoryManager.InventoryType;
 import me.mani.molecraft.Messenger;
 import me.mani.molecraft.MoleCraftListener;
+import me.mani.molecraft.manager.MainManager;
 import me.mani.molecraft.util.PlayerStats;
 
 import org.bukkit.GameMode;
@@ -15,9 +16,13 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener extends MoleCraftListener {
 	
+	public PlayerJoinListener(MainManager mainManager) {
+		super(mainManager);
+	}
+
 	@EventHandler
 	public void onJoin(PlayerJoinEvent ev) {
-		
+				
 		if (GameState.getGameState() == GameState.LOBBY) {
 			ev.setJoinMessage(Messenger.getPrefix() + "§a[>>>] §e" + ev.getPlayer().getName());
 			ev.getPlayer().teleport(gameManager.locationManager.LOBBY_SPAWN);

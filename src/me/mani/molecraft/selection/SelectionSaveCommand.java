@@ -2,9 +2,10 @@ package me.mani.molecraft.selection;
 
 import me.mani.goldenapi.GoldenAPI;
 import me.mani.goldenapi.mysql.ConvertUtil;
+import me.mani.molecraft.Messenger;
 import me.mani.molecraft.MoleCraftCommand;
 import me.mani.molecraft.manager.DebugManager;
-import me.mani.molecraft.manager.DebugManager.MessageType;
+import me.mani.molecraft.manager.MainManager;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,8 +13,8 @@ import org.bukkit.entity.Player;
 
 public class SelectionSaveCommand extends MoleCraftCommand {
 
-	public SelectionSaveCommand() {
-		super("save", true);
+	public SelectionSaveCommand(MainManager mainManager) {
+		super("save", mainManager);
 	}
 
 	@Override
@@ -25,7 +26,7 @@ public class SelectionSaveCommand extends MoleCraftCommand {
 		SelectionTool tool = DebugManager.getSelectionTool();
 		
 		if (!tool.hasQualifiedLocations()) {
-			DebugManager.send(p, MessageType.ERROR, "Setze erst die beiden Locations!");
+			Messenger.send(p, "Setze erst die beiden Locations!");
 			return true;
 		}
 		
@@ -34,7 +35,7 @@ public class SelectionSaveCommand extends MoleCraftCommand {
 		GoldenAPI.getManager().update("molecraft_arena", "id", 1, "loc1", ConvertUtil.toString(tool.getFirstLocation()));		
 		GoldenAPI.getManager().update("molecraft_arena", "id", 1, "loc2", ConvertUtil.toString(tool.getSecondLocation()));
 		
-		DebugManager.send(p, MessageType.INFO, "Die Arena wurde gespeichert!");
+		Messenger.send(p, "Die Arena wurde gespeichert!");
 		
 		return true;
 	}

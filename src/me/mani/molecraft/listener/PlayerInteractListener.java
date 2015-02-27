@@ -3,6 +3,7 @@ package me.mani.molecraft.listener;
 import me.mani.molecraft.GameState;
 import me.mani.molecraft.Messenger;
 import me.mani.molecraft.MoleCraftListener;
+import me.mani.molecraft.manager.MainManager;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,6 +14,10 @@ import org.bukkit.inventory.ItemStack;
 
 public class PlayerInteractListener extends MoleCraftListener {
 	
+	public PlayerInteractListener(MainManager mainManager) {
+		super(mainManager);
+	}
+
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent ev) {
 		Player p = ev.getPlayer();

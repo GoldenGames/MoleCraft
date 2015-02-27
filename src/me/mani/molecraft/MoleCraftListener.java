@@ -12,15 +12,16 @@ import org.bukkit.event.Listener;
 
 public class MoleCraftListener implements Listener {
 	
-	private MainManager mainManager = MoleCraft.getInstance().gameManager == null ? MoleCraft.getInstance().gameManager : MoleCraft.getInstance().debugManager;
-	/** Can only be used if a game manager is active, Otherwise it's null */
-	protected GameManager gameManager = mainManager instanceof GameManager ? (GameManager) mainManager : null;
-	/** Can only be used if a debug manager is active. Otherwise it's null */
-	protected DebugManager debugManager = mainManager instanceof DebugManager ? (DebugManager) mainManager : null;
+	protected GameManager gameManager;
+	protected DebugManager debugManager;
 	private static Consumer<Event> currentConsumer;
 	
-	public MoleCraftListener() {
+	public MoleCraftListener(MainManager mainManager) {
 		MoleCraft.getInstance().getServer().getPluginManager().registerEvents(this, MoleCraft.getInstance());
+		if (mainManager instanceof GameManager)
+			this.gameManager = (GameManager) mainManager;
+		else if (mainManager instanceof DebugManager)
+			this.debugManager = (DebugManager) mainManager;
 	}
 	
 	protected void accept(Event ev, boolean cancel) {

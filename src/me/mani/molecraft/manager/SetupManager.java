@@ -42,6 +42,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class SetupManager {
 	
 	public MoleCraft moleCraft;
+	private GameManager gameManager;
 	
 	private DatabaseManager sql;
 	private ArenaMap arenaMap;
@@ -50,6 +51,7 @@ public class SetupManager {
 	
 	public SetupManager(MoleCraft moleCraft) {
 		this.moleCraft = moleCraft;
+		this.gameManager = moleCraft.gameManager;
 	}
 	
 	public boolean setup() {
@@ -79,7 +81,7 @@ public class SetupManager {
 	
 	
 	private ArenaMap loadArenaMap() throws SetupException {
-		World world = Bukkit.createWorld(new WorldCreator("map"));
+		World world = Bukkit.getWorld("map");
 		if (world == null)
 			throw new SetupException("The world loaded, doesn't exists");
 		File mapInfoFile = new File(world.getWorldFolder(), "mapInfo.yml");
@@ -140,24 +142,24 @@ public class SetupManager {
 	}
 	
 	private void registerListener() {
-		new BlockBreakListener();
-		new BlockPlaceListener();
-		new PlayerJoinListener();
-		new PlayerQuitListener();	
-		new PlayerMoveListener();
-		new PlayerItemDropPickupListener();
-		new PlayerInteractListener();
-		new PlayerDeathListener();
-		new PlayerDamageListener();
-		new EntityExplodeListener();
-		new PressurePlatePressListener();
-		new PlayerLoginListener();
-		new PlayerRespawnListener();
-		new InventoryClickListener();
+		new BlockBreakListener(gameManager);
+		new BlockPlaceListener(gameManager);
+		new PlayerJoinListener(gameManager);
+		new PlayerQuitListener(gameManager);	
+		new PlayerMoveListener(gameManager);
+		new PlayerItemDropPickupListener(gameManager);
+		new PlayerInteractListener(gameManager);
+		new PlayerDeathListener(gameManager);
+		new PlayerDamageListener(gameManager);
+		new EntityExplodeListener(gameManager);
+		new PressurePlatePressListener(gameManager);
+		new PlayerLoginListener(gameManager);
+		new PlayerRespawnListener(gameManager);
+		new InventoryClickListener(gameManager);
 	}
 	
 	private void registerCommands() {
-		new StatsCommand();
+		new StatsCommand(gameManager);
 	}
 	
 	public LocationManager getLocationManager() {

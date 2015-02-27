@@ -4,6 +4,7 @@ import me.mani.molecraft.GameState;
 import me.mani.molecraft.Messenger;
 import me.mani.molecraft.MoleCraftListener;
 import me.mani.molecraft.manager.GameManager;
+import me.mani.molecraft.manager.MainManager;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -11,6 +12,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class PlayerMoveListener extends MoleCraftListener {
+
+	public PlayerMoveListener(MainManager mainManager) {
+		super(mainManager);
+	}
 
 	@EventHandler
 	public void onMove(PlayerMoveEvent ev) {

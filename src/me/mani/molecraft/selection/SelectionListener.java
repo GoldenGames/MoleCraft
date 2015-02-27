@@ -1,8 +1,8 @@
 package me.mani.molecraft.selection;
 
+import me.mani.molecraft.Messenger;
 import me.mani.molecraft.MoleCraftListener;
-import me.mani.molecraft.manager.DebugManager;
-import me.mani.molecraft.manager.DebugManager.MessageType;
+import me.mani.molecraft.manager.MainManager;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +13,8 @@ public class SelectionListener extends MoleCraftListener {
 
 	private SelectionTool tool;
 	
-	public SelectionListener(SelectionTool tool) {
+	public SelectionListener(MainManager mainManager, SelectionTool tool) {
+		super(mainManager);
 		this.tool = tool;
 	}
 	
@@ -24,11 +25,11 @@ public class SelectionListener extends MoleCraftListener {
 			return;
 		if (ev.getAction() == Action.LEFT_CLICK_BLOCK) {
 			tool.setFirstLocation(ev.getClickedBlock().getLocation());
-			DebugManager.send(p, MessageType.INFO, "Erste Location gesetzt! (" + tool.getCount() + ")");
+			Messenger.send(p, "Erste Location gesetzt! (" + tool.getCount() + ")");
 		}
 		else if (ev.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			tool.setSecondLocation(ev.getClickedBlock().getLocation());
-			DebugManager.send(p, MessageType.INFO, "Zweite Location gesetzt! (" + tool.getCount() + ")");
+			Messenger.send(p, "Zweite Location gesetzt! (" + tool.getCount() + ")");
 		}
 		ev.setCancelled(true);
 	}

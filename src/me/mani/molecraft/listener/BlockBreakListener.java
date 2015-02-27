@@ -6,6 +6,7 @@ import me.mani.molecraft.GameState;
 import me.mani.molecraft.MoleCraftListener;
 import me.mani.molecraft.manager.BlockManager;
 import me.mani.molecraft.manager.GameManager;
+import me.mani.molecraft.manager.MainManager;
 import me.mani.molecraft.util.WoolLocation;
 
 import org.bukkit.Material;
@@ -14,6 +15,10 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class BlockBreakListener extends MoleCraftListener {
 	
+	public BlockBreakListener(MainManager mainManager) {
+		super(mainManager);
+	}
+
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent ev) {
