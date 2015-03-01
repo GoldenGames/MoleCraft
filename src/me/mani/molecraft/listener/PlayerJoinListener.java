@@ -8,8 +8,8 @@ import me.mani.molecraft.InventoryManager.InventoryType;
 import me.mani.molecraft.Messenger;
 import me.mani.molecraft.MoleCraftListener;
 import me.mani.molecraft.manager.MainManager;
-import me.mani.molecraft.util.PlayerStats;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -29,21 +29,24 @@ public class PlayerJoinListener extends MoleCraftListener {
 			ev.getPlayer().setGameMode(GameMode.ADVENTURE);
 			
 			gameManager.inventoryManager.setInventory(ev.getPlayer(), InventoryType.LOBBY);
-			gameManager.statsManager.addPlayerStats(ev.getPlayer());
+//			gameManager.statsManager.addPlayerStats(ev.getPlayer());
 			
 			gameManager.lobbyPlayerManager.addPlayer();
 			
-			PlayerStats stats = gameManager.statsManager.getPlayerStats(ev.getPlayer());
+//			PlayerStats stats = gameManager.statsManager.getPlayerStats(ev.getPlayer());
 			
 			Hologram hologram = new Hologram(gameManager.locationManager.STATS_DISPLAY);
 			HologramLineManager lm = hologram.getLineManager();
 			lm.addLine("§7-=-=---=|=---=-=-");
-			lm.addLine("§eDeine Stats:");
-			lm.addLine("Kills: §e" + stats.getKills());
-			lm.addLine("Deaths: §e" + stats.getDeaths());
-			lm.addLine("Wins: §e" + stats.getWins());
-			lm.addLine("Games: §e" + stats.getGames());
-			lm.addLine("Chests: §e" + stats.getChests());
+//			lm.addLine("§eDeine Stats:");
+//			lm.addLine("Kills: §e" + stats.getKills());
+//			lm.addLine("Deaths: §e" + stats.getDeaths());
+//			lm.addLine("Wins: §e" + stats.getWins());
+//			lm.addLine("Games: §e" + stats.getGames());
+//			lm.addLine("Chests: §e" + stats.getChests());
+			lm.addLine("§eDu bist §c" + ev.getPlayer().getName());
+			lm.addLine("§eUnd spielst auf §c" + Bukkit.getServerName());
+			lm.addLine("§eStats folgen!");
 			lm.addLine("§7-=-=---=|=---=-=-");
 			hologram.sendPlayer(ev.getPlayer());
 			

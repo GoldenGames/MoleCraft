@@ -2,7 +2,6 @@ package me.mani.molecraft;
 
 import me.mani.molecraft.manager.DebugManager;
 import me.mani.molecraft.manager.GameManager;
-import me.mani.molecraft.manager.StatsManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
@@ -21,22 +20,21 @@ public class MoleCraft extends JavaPlugin {
 	public DebugManager debugManager;
 	public GameManager gameManager;
 	
-	private StatsManager statsManager;
+//	private StatsManager statsManager;
 	
 	@Override
 	public void onEnable() {
 		pluginInstance = this;
-		Messenger.setPrefix("§7<§aMoleCraft§7> §e");	
+		Messenger.setPrefix("§7<§aMoleCraft§7> §e");
 		
 		getConfig().addDefault("debug", true);
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 		
-		Bukkit.createWorld(new WorldCreator("map"));
+		Bukkit.createWorld(new WorldCreator("map")).setDifficulty(Difficulty.EASY);
 		for (World w : Bukkit.getWorlds()) {
-			w.setAutoSave(false);
+			w.setAutoSave(true);
 			w.setSpawnFlags(false, false);
-			w.setDifficulty(Difficulty.EASY);
 		}
 		
 		if (isDebug())
@@ -55,9 +53,9 @@ public class MoleCraft extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		
-		if (!isDebug())
-			statsManager.sendAll();
+				
+//		if (!isDebug())
+//			statsManager.sendAll();
 		
 	}
 	

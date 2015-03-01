@@ -24,7 +24,7 @@ public class LobbyPlayerManager {
 	}
 
 	private boolean canStart() {
-		return playerCount >= 2 && gameManager.getGameCountdown() == null;
+		return playerCount >= 1 && gameManager.getGameCountdown() == null;
 	}
 	
 	private boolean canStop() {

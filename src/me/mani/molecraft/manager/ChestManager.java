@@ -1,5 +1,6 @@
 package me.mani.molecraft.manager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -19,7 +20,7 @@ public class ChestManager {
 	
 	private static HashMap<ItemStack, Integer> chestItems = new HashMap<>();
 	
-	private List<Chest> chests;
+	private List<Chest> chests = new ArrayList<>();
 	
 	public ChestManager(List<Block> chestBlocks) {
 		for (Block chestBlock : chestBlocks) {

@@ -3,11 +3,11 @@ package me.mani.molecraft.listener;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.mani.molecraft.Messenger;
 import me.mani.molecraft.MoleCraftListener;
 import me.mani.molecraft.animation.FireFontain;
 import me.mani.molecraft.manager.MainManager;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,7 +35,7 @@ public class PressurePlatePressListener extends MoleCraftListener {
 	
 	private void handlePressure(Player p) {
 		pressed.add(p);
-		Bukkit.broadcastMessage("§7[§dMoleCraft§7] §e" + p.getName() + " §6hat den Parkour geschafft!");
+		Messenger.sendAll("§b" + p.getName() + " §7hat den Parkour geschafft!");
 		FireFontain fireFontain = new FireFontain(p.getLocation());
 		fireFontain.run();
 	}

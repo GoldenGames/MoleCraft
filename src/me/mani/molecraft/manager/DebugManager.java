@@ -16,10 +16,10 @@ public class DebugManager implements MainManager {
 	public DebugManager(MoleCraft moleCraft) {
 		this.moleCraft = moleCraft;
 		tool = new SelectionTool();
-		new SelectionListener(tool);
-		new SelectionSaveCommand();
+		new SelectionListener(this, tool);
+		new SelectionSaveCommand(this);
 		new LocationSetCommand(this);
-		new WorldCommand();
+		new WorldCommand(this);
 	}
 	
 	public static SelectionTool getSelectionTool() {

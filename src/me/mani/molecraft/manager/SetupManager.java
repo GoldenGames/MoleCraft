@@ -32,10 +32,10 @@ import me.mani.molecraft.util.RandomUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.WorldCreator;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -109,16 +109,18 @@ public class SetupManager {
 	}
 	
 	private LocationManager loadLocationManager() throws SetupException {
+		World lobbyWorld = Bukkit.getWorld("world");
+		lobbyWorld.setDifficulty(Difficulty.PEACEFUL);
 		Location lobbySpawnLocation = 
-				ConvertUtil.toLocation((String) sql.get(Constants.MAIN_TABLE, "key", Constants.LOBBY_SPAWN, "value"), arenaMap.getWorld());
+				ConvertUtil.toLocation((String) sql.get(Constants.MAIN_TABLE, "key", Constants.LOBBY_SPAWN, "value"), lobbyWorld);
 		Location parkourSpawnLocation =
-				ConvertUtil.toLocation((String) sql.get(Constants.MAIN_TABLE, "key", Constants.PARKOUR_SPAWN, "value"), arenaMap.getWorld());		
+				ConvertUtil.toLocation((String) sql.get(Constants.MAIN_TABLE, "key", Constants.PARKOUR_SPAWN, "value"), lobbyWorld);		
 		Location statsDisplayLocation =
-				ConvertUtil.toLocation((String) sql.get(Constants.MAIN_TABLE, "key", Constants.STATS_DISPLAY, "value"), arenaMap.getWorld());
+				ConvertUtil.toLocation((String) sql.get(Constants.MAIN_TABLE, "key", Constants.STATS_DISPLAY, "value"), lobbyWorld);
 		Map<Integer, Location> spawnLocations = new HashMap<>();
 		for (int i = 0; i < 7; i++)
 			spawnLocations.put(i, ConvertUtil.toLocation(arenaMap.getMapInfo().getString("spawn" + i), arenaMap.getWorld()));
-		return new LocationManager(arenaMap.getWorld(), lobbySpawnLocation, parkourSpawnLocation, statsDisplayLocation, spawnLocations);	
+		return new LocationManager(lobbyWorld, lobbySpawnLocation, parkourSpawnLocation, statsDisplayLocation, spawnLocations);	
 	}
 	
 	private void loadChunks() {
@@ -137,6 +139,7 @@ public class SetupManager {
 		for (int i = 1; i < count; i++) {
 			int randomInteger = RandomUtil.getRandomInteger(0, dirtBlocks.size() - 1);
 			chestBlocks.add(dirtBlocks.get(randomInteger));
+			dirtBlocks.remove(randomInteger);
 		}
 		return new ChestManager(chestBlocks);
 	}

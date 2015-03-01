@@ -66,7 +66,7 @@ public class GameManager implements MainManager {
 			
 			int i = ev.getCurrentNumber();
 			if (i == 30 || i == 20 || i == 10 || i <= 5) {
-				ev.setMessage("§7Das Spiel startet in §c" + ev.getCurrentNumber() + " Sekunden.");
+				ev.setMessage("§7Das Spiel startet " + (i != 0 ? "in §e" + i + " Sekunde" + (i == 1 ? "." : "n.") : "."));
 				ev.setSound(Sound.NOTE_BASS);
 			}
 			
@@ -78,7 +78,8 @@ public class GameManager implements MainManager {
 	}
 	
 	public void stopGameCountdown() {
-		
+		gameCountdown.stop(true);
+		gameCountdown = null;
 	}
 	
 	private void startWarmUp() {
@@ -90,7 +91,7 @@ public class GameManager implements MainManager {
 			
 			int i = ev.getCurrentNumber();
 			if (i == 20 || i == 10 || i <= 3) {
-				ev.setMessage("§7Das Spiel startet in §c" + i + " Sekunde" + (i == 1 ? "." : "n."));
+				ev.setMessage("§7Das Spiel startet " + (i != 0 ? "in §c" + i + " Sekunde" + (i == 1 ? "." : "n.") : "."));
 				ev.setSound(Sound.ORB_PICKUP);
 			}
 			
@@ -127,9 +128,11 @@ public class GameManager implements MainManager {
 		Player[] allPlayers = Bukkit.getOnlinePlayers().toArray(new Player[Bukkit.getOnlinePlayers().size()]);
 		
 		for (int team = 0; team < 7; team++) {
+			if (allPlayers.length < team + 1)
+				break;
 			Player player = allPlayers[team];
 			player.teleport(locationManager.getSpawnLocation(team));
-			player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 40*20, 1));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 40*20, 0));
 			player.setGameMode(GameMode.SURVIVAL);
 			teamManager.setTeam(player, Team.getById(team));
 			inventoryManager.setInventory(player, InventoryType.INGAME);

@@ -21,7 +21,6 @@ public class ItemUtil {
 		ItemMeta itemMeta = itemStack.getItemMeta();
 		itemMeta.setDisplayName(displayName);
 		itemMeta.setLore(Arrays.asList(lore));
-		itemMeta.spigot().setUnbreakable(true);
 		itemStack.setItemMeta(itemMeta);
 		return itemStack;
 	}
@@ -34,7 +33,6 @@ public class ItemUtil {
 		ItemMeta itemMeta = createItem(itemStack, displayName, lore).getItemMeta();
 		if (enchantment != null)
 			itemMeta.addEnchant(enchantment, level, true);
-		itemMeta.spigot().setUnbreakable(true);
 		itemStack.setItemMeta(itemMeta);
 		return itemStack;
 	}
@@ -64,7 +62,6 @@ public class ItemUtil {
 		itemMeta.setDisplayName(displayName);
 		itemMeta.setLore(Arrays.asList(lore));
 		itemMeta.setColor(dyeColor.getColor());
-		itemMeta.spigot().setUnbreakable(true);
 		itemStack.setItemMeta(itemMeta);
 		return itemStack;
 	}
