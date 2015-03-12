@@ -4,10 +4,11 @@ import me.mani.goldenapi.hologram2.Hologram;
 import me.mani.goldenapi.hologram2.Hologram.HologramLineManager;
 import me.mani.goldenapi.util.Title;
 import me.mani.molecraft.GameState;
-import me.mani.molecraft.InventoryManager.InventoryType;
 import me.mani.molecraft.Messenger;
 import me.mani.molecraft.MoleCraftListener;
+import me.mani.molecraft.ArenaMapPack.ArenaMapInfo;
 import me.mani.molecraft.manager.MainManager;
+import me.mani.molecraft.manager.InventoryManager.InventoryType;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -31,7 +32,7 @@ public class PlayerJoinListener extends MoleCraftListener {
 			gameManager.inventoryManager.setInventory(ev.getPlayer(), InventoryType.LOBBY);
 //			gameManager.statsManager.addPlayerStats(ev.getPlayer());
 			
-			gameManager.lobbyPlayerManager.addPlayer();
+			gameManager.lobbyManager.addPlayer();
 			
 //			PlayerStats stats = gameManager.statsManager.getPlayerStats(ev.getPlayer());
 			
@@ -52,6 +53,9 @@ public class PlayerJoinListener extends MoleCraftListener {
 			
 			Title title = new Title("§7» §aMoleCraft §7«", "§eSei der wahre §6Mole", 10, 60, 10, false);
 			title.send(ev.getPlayer());
+			
+			for (ArenaMapInfo arenaMapInfo : gameManager.arenaMapManager.getArenaMapPack().getArenaMapInfos())
+				Messenger.send(ev.getPlayer(), arenaMapInfo.getDisplayName());
 		}
 		
 	}

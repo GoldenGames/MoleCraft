@@ -1,13 +1,15 @@
-package me.mani.molecraft;
+package me.mani.molecraft.manager;
 
-import me.mani.molecraft.manager.GameManager;
-import me.mani.molecraft.manager.TeamManager;
+import me.mani.molecraft.ArenaMapPack;
+import me.mani.molecraft.ArenaMapPack.ArenaMapInfo;
 import me.mani.molecraft.manager.TeamManager.Team;
 import me.mani.molecraft.util.ItemUtil;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionType;
@@ -15,6 +17,7 @@ import org.bukkit.potion.PotionType;
 public class InventoryManager {
 	
 	private TeamManager teamManager;
+	private Inventory votingInventory;
 	
 	public InventoryManager(GameManager gameManager) {
 		teamManager = gameManager.teamManager;
@@ -72,7 +75,25 @@ public class InventoryManager {
 			inv.setBoots(ItemUtil.createItem(new ItemStack(Material.LEATHER_BOOTS), color + "Schuhe", team.getDyeColor()));
 		}
 	}
-
+	
+	public void openVotingInventory(Player player) {
+		player.openInventory(votingInventory);
+	}
+	
+	public void createVotingInventory(ArenaMapPack arenaMapPack) {
+		Inventory inv = Bukkit.createInventory(null, 9 * 3, "§8Votings");
+		
+		for (int i = 0; i < 4; i++) {
+			if (!arenaMapPack.containsArenaMapInfo(i))
+				break;
+			ArenaMapInfo arenaMapInfo = arenaMapPack.getArenaMapInfo(i);
+			inv.setItem(10 + i * 2, ItemUtil.createItem(new ItemStack(Material.STAINED_CLAY, 1, (short) i), " ", arenaMapInfo.getDisplayLore().split(";")
+			));
+		}
+		
+		votingInventory = inv;
+	}
+	
 	public enum InventoryType { LOBBY, INGAME; }
-
+	
 }

@@ -1,14 +1,16 @@
 package me.mani.molecraft.manager;
 
-// XXX: Find a better name for this
-public class LobbyPlayerManager {
+
+public class LobbyManager {
 	
 	private GameManager gameManager;
+	private VoteManager voteManager;
 	
-	private static int playerCount = 0;
+	private int playerCount = 0;
 	
-	public LobbyPlayerManager(GameManager gameManager) {
+	public LobbyManager(GameManager gameManager, VoteManager voteManager) {
 		this.gameManager = gameManager;
+		this.voteManager = voteManager;
 	}
 	
 	public void addPlayer() {
@@ -24,11 +26,14 @@ public class LobbyPlayerManager {
 	}
 
 	private boolean canStart() {
-		return playerCount >= 1 && gameManager.getGameCountdown() == null;
+		return playerCount >= 2 && gameManager.getGameCountdown() == null;
 	}
 	
 	private boolean canStop() {
 		return gameManager.getGameCountdown() != null;
 	}
-
+	
+	public VoteManager getVoteManager() {
+		return voteManager;
+	}	
 }

@@ -18,7 +18,7 @@ public class PlayerQuitListener extends MoleCraftListener {
 		
 		if (GameState.getGameState() == GameState.LOBBY) {
 			ev.setQuitMessage("§c[<<<] §e" + ev.getPlayer().getName());
-			gameManager.lobbyPlayerManager.removePlayer();
+			gameManager.lobbyManager.removePlayer();
 		}
 		
 	}

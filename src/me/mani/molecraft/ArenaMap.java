@@ -1,5 +1,11 @@
 package me.mani.molecraft;
 
+import java.io.File;
+import java.util.List;
+
+import me.mani.goldenapi.mysql.ConvertUtil;
+import me.mani.molecraft.manager.SetupManager.SetupException;
+
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -92,6 +98,31 @@ public class ArenaMap {
 	 */
 	public static ArenaMap getCurrentMap() {
 		return currentMap;
+	}
+	
+	/**
+	 * Loads an map
+	 * 
+	 * @param mainWorld The world where the map is in
+	 * @param mapInfoPath The path to the map info file 
+	 * @return The arena map
+	 * @throws SetupException If something doesn't work out
+	 */
+	public static ArenaMap loadArenaMap(World mainWorld, String mapInfoPath) throws SetupException {
+		File mapInfoFile = new File(mainWorld.getWorldFolder(), mapInfoPath);
+		if (!mapInfoFile.exists())
+			throw new SetupException("The map info file doesn't exists");
+		YamlConfiguration mapInfo = YamlConfiguration.loadConfiguration(mapInfoFile);
+		String displayName = mapInfo.getString(Constants.DISPLAY_NAME, "");
+		String builderName = mapInfo.getString(Constants.BUILDER_NAME, "");
+		List<String> cornerLocations = mapInfo.getStringList(Constants.CORNER_LOCATION);
+		if (displayName.equals("") || builderName.equals("") || cornerLocations.isEmpty() || cornerLocations.size() < 2)
+			throw new SetupException("The config isn't valid");
+		Location cornerLocation1 = ConvertUtil.toLocation(cornerLocations.get(0), mainWorld);
+		Location cornerLocation2 = ConvertUtil.toLocation(cornerLocations.get(1), mainWorld);
+		if (cornerLocation1 == null || cornerLocation2 == null)
+			throw new SetupException("One of the locations, or both, doesn't ecists");
+		return new ArenaMap(mainWorld, displayName, builderName, mapInfo, cornerLocation1, cornerLocation2);
 	}
 	
 }

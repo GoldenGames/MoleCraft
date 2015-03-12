@@ -1,5 +1,6 @@
 package me.mani.molecraft;
 
+import me.mani.molecraft.ArenaMapPack.ArenaMapInfo;
 import me.mani.molecraft.manager.DebugManager;
 import me.mani.molecraft.manager.GameManager;
 
@@ -7,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MoleCraft extends JavaPlugin {
@@ -33,9 +35,11 @@ public class MoleCraft extends JavaPlugin {
 		
 		Bukkit.createWorld(new WorldCreator("map")).setDifficulty(Difficulty.EASY);
 		for (World w : Bukkit.getWorlds()) {
-			w.setAutoSave(true);
+			w.setAutoSave(false);
 			w.setSpawnFlags(false, false);
 		}
+		
+		ConfigurationSerialization.registerClass(ArenaMapInfo.class, "ArenaMapInfo");
 		
 		if (isDebug())
 			debugManager = new DebugManager(this);

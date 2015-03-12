@@ -15,18 +15,21 @@ public class LocationManager {
 		
 	private Map<Integer, Location> spawnLocations;
 	
-	public LocationManager(World world, Location lobbySpawnLocation, Location parkourSpawnLocation, Location statsDisplayLocation, Map<Integer, Location> spawnLocations) {
+	public LocationManager(World world, Location lobbySpawnLocation, Location parkourSpawnLocation, Location statsDisplayLocation) {
 		this.world = world;
 		LOBBY_SPAWN = lobbySpawnLocation;
 		PARKOUR_SPAWN = parkourSpawnLocation;
 		STATS_DISPLAY = statsDisplayLocation;
-		this.spawnLocations = spawnLocations;
 	}
 
 	public Location getSpawnLocation(int id) {
 		if (0 <= id && id <= 7)
 			return spawnLocations.get(id);
 		return null;
+	}
+	
+	public void setSpawnLocation(int id, Location location) {
+		spawnLocations.put(id, location);
 	}
 	
 	public World getWorld() {

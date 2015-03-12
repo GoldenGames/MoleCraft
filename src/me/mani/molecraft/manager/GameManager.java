@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import me.mani.molecraft.ArenaMapPack.ArenaMapInfo;
 import me.mani.molecraft.BungeeCordHandler;
 import me.mani.molecraft.CountdownManager;
 import me.mani.molecraft.CountdownManager.Countdown;
 import me.mani.molecraft.GameState;
-import me.mani.molecraft.InventoryManager;
-import me.mani.molecraft.InventoryManager.InventoryType;
 import me.mani.molecraft.Messenger;
 import me.mani.molecraft.MoleCraft;
+import me.mani.molecraft.manager.InventoryManager.InventoryType;
 import me.mani.molecraft.manager.TeamManager.Team;
 import me.mani.molecraft.util.WoolLocation;
 
@@ -27,7 +27,8 @@ public class GameManager implements MainManager {
 
 	private MoleCraft moleCraft;
 	private SetupManager setupManager;
-	public LobbyPlayerManager lobbyPlayerManager;
+	public LobbyManager lobbyManager;
+	public ArenaMapManager arenaMapManager;
 	public LocationManager locationManager;
 	public TeamManager teamManager;
 //	public StatsManager statsManager;
@@ -49,10 +50,12 @@ public class GameManager implements MainManager {
 			// Game needs to be checked here
 		}
 				
+		arenaMapManager = setupManager.getArenaMapManager();
 		locationManager = setupManager.getLocationManager();
 		teamManager = new TeamManager();
 		inventoryManager = new InventoryManager(this);
-		lobbyPlayerManager = new LobbyPlayerManager(this);
+		inventoryManager.createVotingInventory(arenaMapManager.getArenaMapPack());
+		lobbyManager = new LobbyManager(this, new VoteManager(3));
 		
 		GameState.setGameState(GameState.LOBBY);
 	}

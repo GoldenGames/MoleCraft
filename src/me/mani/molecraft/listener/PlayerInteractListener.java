@@ -32,12 +32,15 @@ public class PlayerInteractListener extends MoleCraftListener {
 				return;
 				
 			// The paper item gives an explanation of the game		
-			if (item.getType() == Material.PAPER) {
+			if (item.getType() == Material.PAPER)
 				new TutorialThread(p, item).start();
-			}
+			
+			// The book item opens the voting menu
+			else if (item.getType() == Material.BOOK)
+				gameManager.inventoryManager.openVotingInventory(p);
 			
 			// The firework item teleports the player to the parkour
-			if (item.getType() == Material.FIREWORK)
+			else if (item.getType() == Material.FIREWORK)
 				p.teleport(gameManager.locationManager.PARKOUR_SPAWN);
 		}
 		ev.setCancelled(true);	
