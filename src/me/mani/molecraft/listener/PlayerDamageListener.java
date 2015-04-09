@@ -2,7 +2,7 @@ package me.mani.molecraft.listener;
 
 import me.mani.molecraft.GameState;
 import me.mani.molecraft.MoleCraftListener;
-import me.mani.molecraft.manager.GameManager;
+import me.mani.molecraft.MoleCraftPlayer;
 import me.mani.molecraft.manager.MainManager;
 
 import org.bukkit.entity.Player;
@@ -22,8 +22,9 @@ public class PlayerDamageListener extends MoleCraftListener {
 			return;
 		
 		Player p = (Player) ev.getEntity();
+		MoleCraftPlayer moleCraftPlayer = MoleCraftPlayer.getMoleCraftPlayer(p);
 		
-		if (GameState.getGameState() != GameState.INGAME || ev.getCause() == DamageCause.SUFFOCATION || !GameManager.isIngame(p))
+		if (GameState.getGameState() != GameState.INGAME || ev.getCause() == DamageCause.SUFFOCATION || !moleCraftPlayer.isIngame())
 			ev.setCancelled(true);
 	}
 

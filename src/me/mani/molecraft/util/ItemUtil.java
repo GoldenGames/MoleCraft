@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -19,6 +20,7 @@ public class ItemUtil {
 	
 	public static ItemStack createItem(ItemStack itemStack, String displayName, String... lore) {
 		ItemMeta itemMeta = itemStack.getItemMeta();
+		itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		itemMeta.setDisplayName(displayName);
 		itemMeta.setLore(Arrays.asList(lore));
 		itemStack.setItemMeta(itemMeta);
@@ -31,6 +33,7 @@ public class ItemUtil {
 	
 	public static ItemStack createItem(ItemStack itemStack, String displayName, Enchantment enchantment, int level, String... lore) {
 		ItemMeta itemMeta = createItem(itemStack, displayName, lore).getItemMeta();
+		itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		if (enchantment != null)
 			itemMeta.addEnchant(enchantment, level, true);
 		itemStack.setItemMeta(itemMeta);
@@ -59,6 +62,7 @@ public class ItemUtil {
 	
 	public static ItemStack createItem(ItemStack itemStack, String displayName, DyeColor dyeColor, String... lore) {
 		LeatherArmorMeta itemMeta = (LeatherArmorMeta) itemStack.getItemMeta();
+		itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		itemMeta.setDisplayName(displayName);
 		itemMeta.setLore(Arrays.asList(lore));
 		itemMeta.setColor(dyeColor.getColor());

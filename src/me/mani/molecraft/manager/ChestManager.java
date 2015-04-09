@@ -2,8 +2,10 @@ package me.mani.molecraft.manager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import me.mani.molecraft.util.ItemUtil;
 import me.mani.molecraft.util.RandomUtil;
@@ -21,12 +23,14 @@ public class ChestManager {
 	private static HashMap<ItemStack, Integer> chestItems = new HashMap<>();
 	
 	private List<Chest> chests = new ArrayList<>();
+	private Set<Chest> openedChest;
 	
 	public ChestManager(List<Block> chestBlocks) {
 		for (Block chestBlock : chestBlocks) {
 			chestBlock.setType(Material.CHEST); 
 			chests.add((Chest) chestBlock.getState());
 		}
+		openedChest = new HashSet<>();
 	}
 	
 	public void fillAll() {
@@ -48,6 +52,14 @@ public class ChestManager {
 	
 	private int getRandomSlot() {
 		return RandomUtil.getRandomInteger(0, 26);
+	}
+	
+	public boolean isOpened(Chest chest) {
+		return openedChest.contains(chest);
+	}
+	
+	public void openChest(Chest chest) {
+		openedChest.add(chest);
 	}
 	
 	static {

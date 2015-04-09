@@ -31,9 +31,9 @@ public class ArenaMapManager {
 	public ArenaMap setupArenaMap(World mainWorld, int id) throws SetupException {
 		if (!arenaMapPack.containsArenaMapInfo(id))
 			throw new SetupException("The specified arena map doesn't exist");
-		ArenaMap arenaMap = ArenaMap.loadArenaMap(mainWorld, arenaMapPack.getArenaMapInfo(id).getMapInfoPath());
+		ArenaMap arenaMap = ArenaMap.loadArenaMap(mainWorld, arenaMapPack.getArenaMapInfo(id));
 		for (int i = 0; i < 7; i++) // Load spawn locations
-			gameManager.locationManager.setSpawnLocation(i, ConvertUtil.toLocation(arenaMap.getMapInfo().getString("spawn" + i), arenaMap.getWorld()));
+			gameManager.locationManager.setSpawnLocation(i, ConvertUtil.toLocation(arenaMap.getMapInfo().getString("spawn" + i), arenaMap.getWorld()).add(0.5, 0, 0.5));
 		for (Chunk chunk : BlockMath.getChunks(arenaMap.getCornerLocation(0), arenaMap.getCornerLocation(1))) { // Load unloaded chunks
 			if (!chunk.isLoaded())
 				chunk.load();

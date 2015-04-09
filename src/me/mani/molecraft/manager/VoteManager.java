@@ -8,26 +8,30 @@ import org.bukkit.entity.Player;
 public class VoteManager {
 	
 	private Set<Player> voted = new HashSet<>(); 
-	private int[] votesPerChoise;
+	private int[] votingsPerChoise;
 	
 	public VoteManager(int choises) {
-		votesPerChoise = new int[choises];
+		votingsPerChoise = new int[choises];
 	}
 	
-	public boolean addVote(Player player, int choiseId) {
+	public boolean addVoting(Player player, int choiseId) {
 		if (voted.contains(player))
 			return false;	
-		else if (votesPerChoise.length < choiseId || choiseId < votesPerChoise.length)
+		else if (votingsPerChoise.length < choiseId + 1)
 			return false;
 		voted.add(player);
-		votesPerChoise[choiseId]++;
+		votingsPerChoise[choiseId]++;
 		return true;
+	}
+	
+	public int getVotings(int id) {
+		return votingsPerChoise[id];
 	}
 	
 	public int getWinningChoiseId() {
 		int winningChoise = 0;
-		for (int i : votesPerChoise)
-			winningChoise = votesPerChoise[i] > winningChoise ? i : winningChoise;
+		for (int i : votingsPerChoise)
+			winningChoise = votingsPerChoise[i] > winningChoise ? i : winningChoise;
 		return winningChoise;
 	}
 	

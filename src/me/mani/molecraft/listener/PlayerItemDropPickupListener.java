@@ -8,7 +8,6 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class PlayerItemDropPickupListener extends MoleCraftListener {
 
@@ -30,12 +29,8 @@ public class PlayerItemDropPickupListener extends MoleCraftListener {
 		if (GameState.getGameState() == GameState.LOBBY)
 			ev.setCancelled(true);
 		else if (GameState.getGameState() == GameState.INGAME) {
-			if (ev.getItem().getItemStack().getAmount() > 1) {
-				ItemStack newDroppedItemStack = ev.getItem().getItemStack();
-				newDroppedItemStack.setAmount(1);
-				ev.getItem().getWorld().dropItemNaturally(ev.getItem().getLocation(), newDroppedItemStack);
+			if (ev.getItem().getItemStack().getAmount() > 1)
 				ev.getItem().remove();
-			}
 			if (ev.getItem().getItemStack().getType() == Material.DIRT 
 			&& (ev.getPlayer().getInventory().containsAtLeast(ev.getItem().getItemStack(), 64)
 			|| ev.getPlayer().getItemOnCursor().getType() != Material.AIR))

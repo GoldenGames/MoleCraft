@@ -1,6 +1,7 @@
 package me.mani.molecraft;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,24 +49,28 @@ public class ArenaMapPack {
 		if (!mapPackInfoFile.exists())
 			throw new SetupException("The map pack info file doesn't exists");
 		YamlConfiguration mapPackInfo = YamlConfiguration.loadConfiguration(mapPackInfoFile);
-		return new ArenaMapPack((List<ArenaMapInfo>) mapPackInfo.getList("arenaMaps"), mapPackInfo);
+		List<ArenaMapInfo> arenaMapInfos = (List<ArenaMapInfo>) mapPackInfo.getList("arenaMaps");
+		return new ArenaMapPack(arenaMapInfos, mapPackInfo);
 	}
 	
 	@SerializableAs ("ArenaMapInfo")
 	public static class ArenaMapInfo implements ConfigurationSerializable {
 		
 		private String displayName;
+		private String builderName;
 		private String displayLore;
 		private String mapInfoPath;
 		
-		public ArenaMapInfo(String displayName, String displayLore, String mapInfoPath) {
+		public ArenaMapInfo(String displayName, String builderName, String displayLore, String mapInfoPath) {
 			this.displayName = displayName;
+			this.builderName = builderName;
 			this.displayLore = displayLore;
 			this.mapInfoPath = mapInfoPath;
 		}
 		
 		public ArenaMapInfo(Map<String, Object> map) {
 			displayName = map.get("displayName").toString();
+			builderName = map.get("builderName").toString();
 			displayLore = map.get("displayLore").toString();
 			mapInfoPath = map.get("mapInfoPath").toString();
 		}
@@ -74,6 +79,7 @@ public class ArenaMapPack {
 		public Map<String, Object> serialize() {
 			return new HashMap<String, Object>() { private static final long serialVersionUID = 1L; {
 				put("displayName", displayName);
+				put("builderName", builderName);
 				put("displayLore", displayLore);
 				put("mapInfoPath", mapInfoPath);
 			}};
@@ -81,6 +87,10 @@ public class ArenaMapPack {
 
 		public String getDisplayName() {
 			return displayName;
+		}
+		
+		public String getBuilderName() {
+			return builderName;
 		}
 
 		public String getDisplayLore() {

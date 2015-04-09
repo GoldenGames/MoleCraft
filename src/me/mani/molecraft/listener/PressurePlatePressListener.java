@@ -33,11 +33,13 @@ public class PressurePlatePressListener extends MoleCraftListener {
 			handlePressure(ev.getPlayer());
 	}
 	
-	private void handlePressure(Player p) {
-		pressed.add(p);
-		Messenger.sendAll("§b" + p.getName() + " §7hat den Parkour geschafft!");
-		FireFontain fireFontain = new FireFontain(p.getLocation());
+	private void handlePressure(Player player) {
+		// TODO: Move this somewhere else
+		pressed.add(player);
+		Messenger.sendAll("§b" + player.getName() + " §7hat den Parkour geschafft!");
+		FireFontain fireFontain = new FireFontain(player.getLocation());
 		fireFontain.run();
+		gameManager.lobbyManager.handleParkourSuccess(player);
 	}
 
 }

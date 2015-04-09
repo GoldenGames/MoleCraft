@@ -34,16 +34,17 @@ public class MapPackInfoBuilder extends JFrame {
 		config = new YamlConfiguration();
 		
 		JTextField displayNameField = new JTextField("Display name", 40);
+		JTextField builderNameField = new JTextField("Builder name", 40);
 		JTextField displayLoreField = new JTextField("Display lore", 40);
 		JTextField mapInfoPathField = new JTextField("Map info path", 40);
 		JButton addButton = new JButton("Add");
 		JToggleButton themeToggle = new JToggleButton("Toggle theme");
 		JTextArea outputArea = new JTextArea(20, 40);
 		
-		for (Component c : Arrays.asList(displayNameField, displayLoreField, mapInfoPathField, addButton, themeToggle, outputArea))
+		for (Component c : Arrays.asList(displayNameField, builderNameField, displayLoreField, mapInfoPathField, addButton, themeToggle, outputArea))
 			getContentPane().add(c);
 		
-		addButton.addActionListener((ev) -> add(displayNameField.getText(), displayLoreField.getText(), mapInfoPathField.getText(), outputArea));
+		addButton.addActionListener((ev) -> add(displayNameField.getText(), builderNameField.getText(), displayLoreField.getText(), mapInfoPathField.getText(), outputArea));
 		themeToggle.addActionListener((ev) -> {
 			if (themeToggle.isSelected())
 				try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); } catch (Exception e) {}
@@ -55,8 +56,8 @@ public class MapPackInfoBuilder extends JFrame {
 		setVisible(true);
 	}
 	
-	private void add(String displayName, String displayLore, String mapInfoPath, JTextArea outputArea) {
-		arenaMapInfos.add(new ArenaMapInfo(displayName, displayLore, mapInfoPath));
+	private void add(String displayName, String builderName, String displayLore, String mapInfoPath, JTextArea outputArea) {
+		arenaMapInfos.add(new ArenaMapInfo(displayName, builderName, displayLore, mapInfoPath));
 		config.set("arenaMaps", arenaMapInfos);
 		outputArea.setText(config.saveToString());
 	}

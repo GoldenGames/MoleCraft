@@ -11,6 +11,7 @@ import me.mani.molecraft.listener.BlockBreakListener;
 import me.mani.molecraft.listener.BlockPlaceListener;
 import me.mani.molecraft.listener.EntityExplodeListener;
 import me.mani.molecraft.listener.InventoryClickListener;
+import me.mani.molecraft.listener.ItemSpawnListener;
 import me.mani.molecraft.listener.PlayerDamageListener;
 import me.mani.molecraft.listener.PlayerDeathListener;
 import me.mani.molecraft.listener.PlayerInteractListener;
@@ -52,9 +53,6 @@ public class SetupManager {
 			System.out.println("Loaded Locations");
 			loadChunks();
 			System.out.println("Loaded Chunks");
-//			chestManager = addChests(30);
-//			chestManager.fillAll();
-//			System.out.println("Placed and filled chests"); // TODO: Move this
 			registerListener();
 			registerCommands();
 			System.out.println("Registered listeners and commands");
@@ -99,6 +97,8 @@ public class SetupManager {
 	private void registerListener() {
 		new BlockBreakListener(gameManager);
 		new BlockPlaceListener(gameManager);
+		new EntityExplodeListener(gameManager);
+		new ItemSpawnListener(gameManager);
 		new PlayerJoinListener(gameManager);
 		new PlayerQuitListener(gameManager);	
 		new PlayerMoveListener(gameManager);
@@ -106,7 +106,6 @@ public class SetupManager {
 		new PlayerInteractListener(gameManager);
 		new PlayerDeathListener(gameManager);
 		new PlayerDamageListener(gameManager);
-		new EntityExplodeListener(gameManager);
 		new PressurePlatePressListener(gameManager);
 		new PlayerLoginListener(gameManager);
 		new PlayerRespawnListener(gameManager);
@@ -115,6 +114,10 @@ public class SetupManager {
 	
 	private void registerCommands() {
 		new StatsCommand(gameManager);
+	}
+	
+	public DatabaseManager getSQL() {
+		return sql;
 	}
 	
 	public ArenaMapManager getArenaMapManager() {

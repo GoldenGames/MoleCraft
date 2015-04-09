@@ -1,5 +1,6 @@
 package me.mani.molecraft.manager;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Location;
@@ -13,7 +14,7 @@ public class LocationManager {
 	public final Location PARKOUR_SPAWN;
 	public final Location STATS_DISPLAY;
 		
-	private Map<Integer, Location> spawnLocations;
+	private Map<Integer, Location> spawnLocations = new HashMap<>();
 	
 	public LocationManager(World world, Location lobbySpawnLocation, Location parkourSpawnLocation, Location statsDisplayLocation) {
 		this.world = world;

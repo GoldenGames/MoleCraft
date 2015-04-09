@@ -28,7 +28,7 @@ public class LocationSetCommand extends MoleCraftCommand {
 			return "Die Id muss zwischen 0 und 7 sein";
 		
 		debugManager.getMoleCraft().getConfig().set("spawn" + id, ConvertUtil.toString(p.getLocation()));
-		debugManager.getMoleCraft().saveConfig();	
+		debugManager.getMoleCraft().saveConfig();
 		
 		return "Location gesetzt! §7[" + Team.getById(id) + "] (" + id + ")";
 	}

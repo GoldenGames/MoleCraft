@@ -1,5 +1,8 @@
 package me.mani.molecraft.listener;
 
+import org.bukkit.Bukkit;
+
+import me.mani.molecraft.Messenger;
 import me.mani.molecraft.manager.GameManager;
 import me.mani.molecraft.util.PlayerStats;
 
@@ -26,7 +29,8 @@ public class StatsListener {
 			stats.setChests(stats.getChests() + ev.getValue());
 			break;
 		}
-		stats.sendData();
+		if (Bukkit.getPlayer(ev.getUUID()) != null)
+			Messenger.sendBar(Bukkit.getPlayer(ev.getUUID()), "§e+ " + ev.getValue() + " " + ev.getType().getDisplayName(), true);
 	}
 
 }

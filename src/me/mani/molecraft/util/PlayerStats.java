@@ -2,7 +2,6 @@ package me.mani.molecraft.util;
 
 import java.util.UUID;
 
-import me.mani.goldenapi.GoldenAPI;
 import me.mani.goldenapi.mysql.DatabaseManager;
 import me.mani.goldenapi.util.PlayerNameUtil;
 
@@ -21,7 +20,7 @@ public class PlayerStats {
 	public static final String GAMES_ALIAS = "games";
 	public static final String CHESTS_ALIAS = "chests";
 	
-	private DatabaseManager manager;
+	private static DatabaseManager manager;
 	
 	private UUID uuid;
 	private String lastName;
@@ -32,24 +31,20 @@ public class PlayerStats {
 	private int chests;
 	
 	public PlayerStats(Player p) {
-		this.manager = GoldenAPI.getManager();
 		this.uuid = p.getUniqueId();
 		this.lastName = p.getName();
 		fetchData();
 	}
 	
 	public PlayerStats(UUID uuid) {
-		this.manager = GoldenAPI.getManager();
 		this.uuid = uuid;
 		this.lastName = PlayerNameUtil.fromUUID(uuid);
 		fetchData();
 	}
 	
 	public void fetchData() {
-		if (!manager.isAvaible(TABLE, UUID_ALIAS, uuid.toString())) {
+		if (!manager.isAvaible(TABLE, UUID_ALIAS, uuid.toString()))
 			manager.insert(TABLE, UUID_ALIAS, uuid.toString());
-			sendData(0, 0, 0, 0, 0);
-		}
 		this.kills = NumberConversions.toInt(manager.get(TABLE, UUID_ALIAS, uuid.toString(), KILLS_ALIAS));
 		this.deaths = NumberConversions.toInt(manager.get(TABLE, UUID_ALIAS, uuid.toString(), DEATHS_ALIAS));
 		this.wins = NumberConversions.toInt(manager.get(TABLE, UUID_ALIAS, uuid.toString(), WINS_ALIAS));
@@ -115,6 +110,10 @@ public class PlayerStats {
 	
 	public int getChests() {
 		return chests;
+	}
+	
+	public static void addDatabaseManager(DatabaseManager databaseManager) {
+		manager = databaseManager;
 	}
 	
 }

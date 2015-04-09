@@ -22,7 +22,7 @@ public class MoleCraft extends JavaPlugin {
 	public DebugManager debugManager;
 	public GameManager gameManager;
 	
-//	private StatsManager statsManager;
+	private Thread autoRestartThread;
 	
 	@Override
 	public void onEnable() {
@@ -48,18 +48,15 @@ public class MoleCraft extends JavaPlugin {
 			gameManager.startBootstrap();
 		}
 		
-//		statsManager = new StatsManager();
-//		statsManager.setupStatsBoard();
-		
-		Thread autoRestart = new Thread(new AutoRestartThread());
-		autoRestart.start();
+		autoRestartThread = new Thread(new AutoRestartThread());
+		autoRestartThread.start();
 	}
 	
 	@Override
 	public void onDisable() {
 				
-//		if (!isDebug())
-//			statsManager.sendAll();
+		if (!isDebug())
+			gameManager.statsManager.sendAll();
 		
 	}
 	
@@ -71,6 +68,10 @@ public class MoleCraft extends JavaPlugin {
 		return pluginInstance;
 	}
 	
+	public void cancelAutoRestart() {
+		autoRestartThread.interrupt();
+	}
+	
 	public class AutoRestartThread implements Runnable {
 
 		@Override
@@ -78,7 +79,7 @@ public class MoleCraft extends JavaPlugin {
 			
 			// Sleep one hour and then restart the server automatic	
 			try {
-				Thread.sleep(1000 * 60 * 60);
+				Thread.sleep(1000 * 60 * 60 * 4);
 				Bukkit.broadcastMessage("§cDer Server wird aus Datenbankgründen nach einer Stunde automatisch neugestartet!");
 				Thread.sleep(1000 * 5);
 				getInstance().getServer().shutdown();

@@ -22,16 +22,16 @@ public class StatsManager {
 	private HashMap<Player, PlayerStats> playerStats = new HashMap<>();
 	
 	public StatsManager(DatabaseManager sql) {
-		// TODO: Make it used, disabled for time
+		this.sql = sql;
 	}
 	
 	public void setupStatsBoard() {
-		for (int i = 1; i < 5; i++) {
-			Location loc = ConvertUtil.toLocation((String) sql.get("molecraft", "setting", STATS_TEMPLATE + i, "value"), Bukkit.getWorld("world"));
-			if (loc.getBlock().getType() != Material.WALL_SIGN || getPlayerStats(i) == null)
+		for (int i = 1; i <= 5; i++) {
+			Location loc = ConvertUtil.toLocation((String) sql.get("molecraft", "key", STATS_TEMPLATE + i, "value"), Bukkit.getWorld("world"));
+			if (loc == null || loc.getBlock().getType() != Material.WALL_SIGN || getPlayerStats(i) == null)
 				continue;
 			Sign sign = (Sign) loc.getBlock().getState();
-			PlayerStats stats = getPlayerStats(i);			
+			PlayerStats stats = getPlayerStats(i);
 			sign.setLine(0, "§7- §8" + i + ". §7-");
 			sign.setLine(1, "");
 			sign.setLine(2, stats.getLastName());

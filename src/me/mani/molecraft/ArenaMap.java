@@ -1,9 +1,11 @@
 package me.mani.molecraft;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import me.mani.goldenapi.mysql.ConvertUtil;
+import me.mani.molecraft.ArenaMapPack.ArenaMapInfo;
 import me.mani.molecraft.manager.SetupManager.SetupException;
 
 import org.bukkit.Location;
@@ -20,6 +22,7 @@ public class ArenaMap {
 	private World world;
 	private String displayName;
 	private String builderName;
+	private List<String> displayLore;
 	private Location[] cornerLocations = new Location[2]; 
 	private YamlConfiguration mapInfo;
 	
@@ -34,10 +37,11 @@ public class ArenaMap {
 	 * @param mapInfo The map's configuration
 	 * @param cornerLocations The map's corner locations
 	 */
-	public ArenaMap(World world, String displayName, String builderName, YamlConfiguration mapInfo, Location... cornerLocations) {
+	public ArenaMap(World world, String displayName, String builderName, List<String> displayLore, YamlConfiguration mapInfo, Location... cornerLocations) {
 		this.world = world;
 		this.displayName = displayName;
 		this.builderName = builderName;
+		this.displayLore = displayLore;
 		this.cornerLocations = cornerLocations;
 		this.mapInfo = mapInfo;
 		currentMap = this;
@@ -53,7 +57,7 @@ public class ArenaMap {
 	}
 
 	/**
-	 * Returns the name of the map, which will be displayed ingame
+	 * Returns the name of the map, will be displayed ingame
 	 * 
 	 * @return The map's display name
 	 */
@@ -68,6 +72,15 @@ public class ArenaMap {
 	 */
 	public String getBuilderName() {
 		return builderName;
+	}
+	
+	/**
+	 * Returns the lore of the map, will be displayed ingame
+	 * 
+	 * @return The map's display lore
+	 */
+	public List<String> getDisplayLore() {
+		return displayLore;
 	}
 	
 	/**
@@ -108,13 +121,14 @@ public class ArenaMap {
 	 * @return The arena map
 	 * @throws SetupException If something doesn't work out
 	 */
-	public static ArenaMap loadArenaMap(World mainWorld, String mapInfoPath) throws SetupException {
-		File mapInfoFile = new File(mainWorld.getWorldFolder(), mapInfoPath);
+	public static ArenaMap loadArenaMap(World mainWorld, ArenaMapInfo arenaMapInfo) throws SetupException {
+		File mapInfoFile = new File(mainWorld.getWorldFolder(), arenaMapInfo.getMapInfoPath());
 		if (!mapInfoFile.exists())
 			throw new SetupException("The map info file doesn't exists");
 		YamlConfiguration mapInfo = YamlConfiguration.loadConfiguration(mapInfoFile);
-		String displayName = mapInfo.getString(Constants.DISPLAY_NAME, "");
-		String builderName = mapInfo.getString(Constants.BUILDER_NAME, "");
+		String displayName = arenaMapInfo.getDisplayName();
+		String builderName = arenaMapInfo.getBuilderName();
+		List<String> displayLore = Arrays.asList(arenaMapInfo.getDisplayLore().split(";"));
 		List<String> cornerLocations = mapInfo.getStringList(Constants.CORNER_LOCATION);
 		if (displayName.equals("") || builderName.equals("") || cornerLocations.isEmpty() || cornerLocations.size() < 2)
 			throw new SetupException("The config isn't valid");
@@ -122,7 +136,7 @@ public class ArenaMap {
 		Location cornerLocation2 = ConvertUtil.toLocation(cornerLocations.get(1), mainWorld);
 		if (cornerLocation1 == null || cornerLocation2 == null)
 			throw new SetupException("One of the locations, or both, doesn't ecists");
-		return new ArenaMap(mainWorld, displayName, builderName, mapInfo, cornerLocation1, cornerLocation2);
+		return new ArenaMap(mainWorld, displayName, builderName, displayLore, mapInfo, cornerLocation1, cornerLocation2);
 	}
 	
 }

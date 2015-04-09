@@ -3,7 +3,7 @@ package me.mani.molecraft.listener;
 import me.mani.molecraft.GameState;
 import me.mani.molecraft.Messenger;
 import me.mani.molecraft.MoleCraftListener;
-import me.mani.molecraft.manager.GameManager;
+import me.mani.molecraft.MoleCraftPlayer;
 import me.mani.molecraft.manager.MainManager;
 
 import org.bukkit.Material;
@@ -28,12 +28,10 @@ public class PlayerMoveListener extends MoleCraftListener {
 		
 		else if (GameState.getGameState() == GameState.INGAME) {
 			Player p = ev.getPlayer();
-			if (ev.getTo().subtract(0, 1, 0).getBlock().getType() == Material.DIRT && ev.getFrom().subtract(0, 1, 0).getBlock().getType() != Material.BEDROCK) {
-				if (GameManager.isIngame(p))
-					return;
-				GameManager.addIngamePlayer(p);
-				GameManager.replaceWool(p);
-				p.setNoDamageTicks(1);
+			MoleCraftPlayer moleCraftPlayer = MoleCraftPlayer.getMoleCraftPlayer(p);
+			if (ev.getTo().subtract(0, 1, 0).getBlock().getType() == Material.DIRT && !moleCraftPlayer.isIngame()) {
+				moleCraftPlayer.setIngame(true);
+				gameManager.replaceWool(p);
 				Messenger.send(p, "Viel Glück!");
 			}
 		}
