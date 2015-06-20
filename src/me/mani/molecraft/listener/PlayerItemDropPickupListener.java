@@ -2,6 +2,7 @@ package me.mani.molecraft.listener;
 
 import me.mani.molecraft.GameState;
 import me.mani.molecraft.MoleCraftListener;
+import me.mani.molecraft.MoleCraftPlayer;
 import me.mani.molecraft.manager.MainManager;
 
 import org.bukkit.Material;
@@ -18,7 +19,9 @@ public class PlayerItemDropPickupListener extends MoleCraftListener {
 	@EventHandler
 	public void onItemDrop(PlayerDropItemEvent ev) {
 		
-		if (GameState.getGameState() == GameState.LOBBY || GameState.getGameState() == GameState.WARM_UP)
+		if (MoleCraftPlayer.getMoleCraftPlayer(ev.getPlayer()).isSpectator() || GameState.getGameState() == GameState.LOBBY || GameState.getGameState() == GameState.WARM_UP)
+			ev.setCancelled(true);
+		else if (ev.getItemDrop().getItemStack().getType() == Material.STAINED_CLAY)
 			ev.setCancelled(true);
 		
 	}
@@ -26,7 +29,7 @@ public class PlayerItemDropPickupListener extends MoleCraftListener {
 	@EventHandler
 	public void onItemPickup(PlayerPickupItemEvent ev) {
 
-		if (GameState.getGameState() == GameState.LOBBY)
+		if (MoleCraftPlayer.getMoleCraftPlayer(ev.getPlayer()).isSpectator() || GameState.getGameState() == GameState.LOBBY)
 			ev.setCancelled(true);
 		else if (GameState.getGameState() == GameState.INGAME) {
 			if (ev.getItem().getItemStack().getAmount() > 1)

@@ -41,12 +41,18 @@ public class ArenaMapManager {
 		return arenaMap;
 	}
 	
-	public ChestManager addChests(ArenaMap arenaMap, int count) {
+	public ChestManager addChests(ArenaMap arenaMap, int chestCount, int enchantmentTableCount) {
 		List<Block> dirtBlocks = BlockMath.getBlocks(arenaMap.getCornerLocation(0), arenaMap.getCornerLocation(1), Material.DIRT);
+		BlockManager.allBlocks.addAll(dirtBlocks);
 		List<Block> chestBlocks = new ArrayList<>();
-		for (int i = 1; i < count; i++) {
+		for (int i = 1; i < chestCount; i++) {
 			int randomInteger = RandomUtil.getRandomInteger(0, dirtBlocks.size() - 1);
 			chestBlocks.add(dirtBlocks.get(randomInteger));
+			dirtBlocks.remove(randomInteger);
+		}
+		for (int i = 1; i < enchantmentTableCount; i++) {
+			int randomInteger = RandomUtil.getRandomInteger(0, dirtBlocks.size() - 1);
+			dirtBlocks.get(randomInteger).setType(Material.ENCHANTMENT_TABLE);
 			dirtBlocks.remove(randomInteger);
 		}
 		return new ChestManager(chestBlocks);

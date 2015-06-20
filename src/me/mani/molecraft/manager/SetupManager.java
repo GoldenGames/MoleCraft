@@ -6,14 +6,21 @@ import me.mani.goldenapi.mysql.DatabaseManager;
 import me.mani.molecraft.ArenaMapPack;
 import me.mani.molecraft.Constants;
 import me.mani.molecraft.MoleCraft;
+import me.mani.molecraft.commands.StartCommand;
 import me.mani.molecraft.commands.StatsCommand;
+import me.mani.molecraft.listener.AsyncPlayerChatListener;
 import me.mani.molecraft.listener.BlockBreakListener;
 import me.mani.molecraft.listener.BlockPlaceListener;
+import me.mani.molecraft.listener.EntityDamageByEntityListener;
 import me.mani.molecraft.listener.EntityExplodeListener;
 import me.mani.molecraft.listener.InventoryClickListener;
+import me.mani.molecraft.listener.InventoryCloseListener;
+import me.mani.molecraft.listener.InventoryOpenListener;
 import me.mani.molecraft.listener.ItemSpawnListener;
+import me.mani.molecraft.listener.PlayerChatTabCompleteListener;
 import me.mani.molecraft.listener.PlayerDamageListener;
 import me.mani.molecraft.listener.PlayerDeathListener;
+import me.mani.molecraft.listener.PlayerInteractEntityListener;
 import me.mani.molecraft.listener.PlayerInteractListener;
 import me.mani.molecraft.listener.PlayerItemDropPickupListener;
 import me.mani.molecraft.listener.PlayerJoinListener;
@@ -21,7 +28,9 @@ import me.mani.molecraft.listener.PlayerLoginListener;
 import me.mani.molecraft.listener.PlayerMoveListener;
 import me.mani.molecraft.listener.PlayerQuitListener;
 import me.mani.molecraft.listener.PlayerRespawnListener;
+import me.mani.molecraft.listener.PlayerToggleSneakListener;
 import me.mani.molecraft.listener.PressurePlatePressListener;
+import me.mani.molecraft.listener.WeatherChangeListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -59,7 +68,6 @@ public class SetupManager {
 		}
 		catch (SetupException e) {
 			e.printStackTrace();
-			return false;
 		}
 		return true;
 	}
@@ -69,7 +77,6 @@ public class SetupManager {
 	}
 	
 	private DatabaseManager loadSQL() throws SetupException {
-		GoldenAPI.setPlayerNameWatching(true);
 		DatabaseManager sql = GoldenAPI.connectToSQL(moleCraft);
 		if (!sql.isAvaible(Constants.MAIN_TABLE, "key", Constants.CONNECTION_TEST))
 			throw new SetupException("The MySQL database ist not avaible");
@@ -95,6 +102,7 @@ public class SetupManager {
 	}
 	
 	private void registerListener() {
+		new AsyncPlayerChatListener(gameManager);
 		new BlockBreakListener(gameManager);
 		new BlockPlaceListener(gameManager);
 		new EntityExplodeListener(gameManager);
@@ -110,10 +118,18 @@ public class SetupManager {
 		new PlayerLoginListener(gameManager);
 		new PlayerRespawnListener(gameManager);
 		new InventoryClickListener(gameManager);
+		new WeatherChangeListener(gameManager);
+		new PlayerInteractEntityListener(gameManager);
+		new InventoryOpenListener(gameManager);
+		new EntityDamageByEntityListener(gameManager);
+		new PlayerToggleSneakListener(gameManager);
+		new InventoryCloseListener(gameManager);
+		new PlayerChatTabCompleteListener(gameManager);
 	}
 	
 	private void registerCommands() {
 		new StatsCommand(gameManager);
+		new StartCommand(gameManager);
 	}
 	
 	public DatabaseManager getSQL() {

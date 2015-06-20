@@ -14,7 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-
 public class PressurePlatePressListener extends MoleCraftListener {
 	
 	public PressurePlatePressListener(MainManager mainManager) {
@@ -36,7 +35,7 @@ public class PressurePlatePressListener extends MoleCraftListener {
 	private void handlePressure(Player player) {
 		// TODO: Move this somewhere else
 		pressed.add(player);
-		Messenger.sendAll("§b" + player.getName() + " §7hat den Parkour geschafft!");
+		Messenger.sendAll(Messenger.getSuffix() + player.getDisplayName() + " §rhat den Parkour geschafft!");
 		FireFontain fireFontain = new FireFontain(player.getLocation());
 		fireFontain.run();
 		gameManager.lobbyManager.handleParkourSuccess(player);

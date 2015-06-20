@@ -2,6 +2,7 @@ package me.mani.molecraft.manager;
 
 import java.util.HashMap;
 
+import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 
@@ -17,28 +18,37 @@ public class TeamManager {
 		return allPlayerTeams.get(p);
 	}
 	
+	public Player getPlayer(Team team) {
+		for (Player player : allPlayerTeams.keySet())
+			if (allPlayerTeams.get(player) == team)
+				return player;
+		return null;
+	}
+	
 	public boolean hasTeam(Player p) {
 		return allPlayerTeams.get(p) != null;
 	}
 	
 	public enum Team {
-		CYAN (0, "§8Team Drachenfruchtgrau", DyeColor.GRAY),
-		BLUE (1, "§3Team Blaubeerenblau", DyeColor.LIGHT_BLUE),
-		GREEN (2, "§aTeam Limettengrün", DyeColor.LIME),
-		YELLOW (3, "§eTeam Mandarinengelb", DyeColor.YELLOW),
-		ORANGE (4, "§6Team Orangenorange", DyeColor.ORANGE),
-		RED (5, "§4Team Apfelrot", DyeColor.RED),
-		PURPLE (6, "§5Team Traubenpurpur", DyeColor.PURPLE),
-		WHITE (7, "§fTeam Litschiweiß", DyeColor.WHITE);
+		RED (5, "Team Apfelrot", ChatColor.DARK_RED, DyeColor.RED),
+		ORANGE (4, "Team Orangenorange", ChatColor.GOLD, DyeColor.ORANGE),
+		YELLOW (3, "Team Mandarinengelb", ChatColor.YELLOW, DyeColor.YELLOW),
+		GREEN (2, "Team Limettengrün", ChatColor.GREEN, DyeColor.LIME),
+		PURPLE (6, "Team Traubenpurpur", ChatColor.LIGHT_PURPLE, DyeColor.PURPLE),
+		GRAY (0, "Team Drachenfruchtgrau", ChatColor.DARK_GRAY, DyeColor.GRAY),
+		BLUE (1, "Team Blaubeerenblau", ChatColor.DARK_AQUA, DyeColor.LIGHT_BLUE),
+		WHITE (7, "Team Litschiweiß", ChatColor.WHITE, DyeColor.WHITE);
 		
 		private int id;
 		private String name;
-		private DyeColor color;
+		private ChatColor chatColor;
+		private DyeColor dyeColor;
 		
-		private Team(int id, String name, DyeColor color) {
+		private Team(int id, String name, ChatColor chatColor, DyeColor dyeColor) {
 			this.id = id;
 			this.name = name;
-			this.color = color;
+			this.chatColor = chatColor;
+			this.dyeColor = dyeColor;
 		}
 		
 		public int getId() {
@@ -49,8 +59,16 @@ public class TeamManager {
 			return name;
 		}
 		
+		public String getDisplayName() {
+			return chatColor + name;
+		}
+		
+		public ChatColor getChatColor() {
+			return chatColor;
+		}
+		
 		public DyeColor getDyeColor() {
-			return color;
+			return dyeColor;
 		}
 		
 		public static Team getById(int id) {

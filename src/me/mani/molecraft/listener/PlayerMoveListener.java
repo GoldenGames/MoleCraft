@@ -29,7 +29,7 @@ public class PlayerMoveListener extends MoleCraftListener {
 		else if (GameState.getGameState() == GameState.INGAME) {
 			Player p = ev.getPlayer();
 			MoleCraftPlayer moleCraftPlayer = MoleCraftPlayer.getMoleCraftPlayer(p);
-			if (ev.getTo().subtract(0, 1, 0).getBlock().getType() == Material.DIRT && !moleCraftPlayer.isIngame()) {
+			if (ev.getTo().subtract(0, 1, 0).getBlock().getType() == Material.DIRT && !moleCraftPlayer.isIngame() && !moleCraftPlayer.isSpectator()) {
 				moleCraftPlayer.setIngame(true);
 				gameManager.replaceWool(p);
 				Messenger.send(p, "Viel Glück!");

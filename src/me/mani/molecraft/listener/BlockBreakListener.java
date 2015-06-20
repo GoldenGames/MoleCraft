@@ -34,7 +34,7 @@ public class BlockBreakListener extends MoleCraftListener {
 		
 		else if (GameState.getGameState() == GameState.INGAME) {
 			
-			if (BlockManager.isBreakable(ev.getBlock().getType())) {
+			if (!MoleCraftPlayer.getMoleCraftPlayer(ev.getPlayer()).isSpectator() && BlockManager.isBreakable(ev.getBlock().getType())) {
 				if (superBlockBreak) {
 					for (int x = -1; x <= 1; x++)
 						for (int y = -1; y <= 1; y++)
@@ -48,17 +48,14 @@ public class BlockBreakListener extends MoleCraftListener {
 				}
 				return;
 			}
-
 			else if (ev.getBlock().getType() == Material.WOOL && !MoleCraftPlayer.getMoleCraftPlayer(ev.getPlayer()).isIngame()) {
 				if (GameManager.destroidWool.get(ev.getPlayer()) == null)
 					GameManager.destroidWool.put(ev.getPlayer(), new ArrayList<WoolLocation>());
 				GameManager.destroidWool.get(ev.getPlayer()).add(new WoolLocation(ev.getBlock().getLocation(), ev.getBlock().getData()));
 				ev.getBlock().setType(Material.AIR);
 			}
-
 			ev.setCancelled(true);
-		}	
-		
+		}			
 		else
 			ev.setCancelled(true);
 	}

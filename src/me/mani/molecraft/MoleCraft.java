@@ -8,7 +8,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MoleCraft extends JavaPlugin {
@@ -27,12 +31,13 @@ public class MoleCraft extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		pluginInstance = this;
-		Messenger.setPrefix("§7<§aMoleCraft§7> §e");
+		Messenger.setPrefix("§8[§aMoleCraft§8] §7");
+		Messenger.setSuffix("§a");
 		
 		getConfig().addDefault("debug", true);
 		getConfig().options().copyDefaults(true);
 		saveConfig();
-		
+				
 		Bukkit.createWorld(new WorldCreator("map")).setDifficulty(Difficulty.EASY);
 		for (World w : Bukkit.getWorlds()) {
 			w.setAutoSave(false);
@@ -40,6 +45,7 @@ public class MoleCraft extends JavaPlugin {
 		}
 		
 		ConfigurationSerialization.registerClass(ArenaMapInfo.class, "ArenaMapInfo");
+		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 		
 		if (isDebug())
 			debugManager = new DebugManager(this);
@@ -47,6 +53,23 @@ public class MoleCraft extends JavaPlugin {
 			gameManager = new GameManager(this);
 			gameManager.startBootstrap();
 		}
+		
+		getCommand("close").setExecutor(new CommandExecutor() {
+			
+			@Override
+			public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+				try {
+					for (Player player : Bukkit.getOnlinePlayers())
+						BungeeCordHandler.connect(player);
+					}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				Bukkit.getScheduler().runTaskLater(pluginInstance, () -> getServer().shutdown(), 20L * 5);
+				return true;
+			}
+			
+		});
 		
 		autoRestartThread = new Thread(new AutoRestartThread());
 		autoRestartThread.start();
@@ -80,10 +103,11 @@ public class MoleCraft extends JavaPlugin {
 			// Sleep one hour and then restart the server automatic	
 			try {
 				Thread.sleep(1000 * 60 * 60 * 4);
-				Bukkit.broadcastMessage("§cDer Server wird aus Datenbankgründen nach einer Stunde automatisch neugestartet!");
+				Bukkit.broadcastMessage("§cDer Server wird aus Datenbankgründen nach vier Stunde automatisch neugestartet!");
 				Thread.sleep(1000 * 5);
 				getInstance().getServer().shutdown();
 			} catch (InterruptedException e) { return; }
+			
 		}
 		
 	}

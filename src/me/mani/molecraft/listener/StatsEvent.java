@@ -37,20 +37,26 @@ public class StatsEvent {
 	}
 	
 	public enum StatsEventType {
-		KILL ("Kill"), 
-		DEATH ("Tod"), 
-		WIN ("Gewonnenes Spiel"),
-		GAME ("Gespieltes Spiel"),
-		CHEST ("Geöffnete Kisten");
+		KILL ("Kill", 20), 
+		DEATH ("Tod", 0), 
+		WIN ("Gewonnenes Spiel", 50),
+		GAME ("Gespieltes Spiel", 0),
+		CHEST ("Geöffnete Kisten", 5);
 		
 		private String displayName;
+		private int points;
 		
-		private StatsEventType(String displayName) {
+		private StatsEventType(String displayName, int points) {
 			this.displayName = displayName;
+			this.points = points;
 		}
 		
 		public String getDisplayName() {
 			return displayName;
+		}
+		
+		public int getPoints() {
+			return points;
 		}
 	}
 

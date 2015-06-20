@@ -12,6 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -44,6 +45,14 @@ public class InventoryClickListener extends MoleCraftListener {
 					Messenger.send(player, "Du hast bereits gevotet.");
 			}
 			ev.setCancelled(true);
+		}
+		else if (GameState.getGameState() == GameState.INGAME) {
+			
+			if (itemStack != null && itemStack.getType() == Material.STAINED_CLAY)
+				ev.setCancelled(true);
+			else if (ev.getView().getType() == InventoryType.ENCHANTING && itemStack.getType() == Material.INK_SACK)
+				ev.setCancelled(true);
+			
 		}
 		
 	}

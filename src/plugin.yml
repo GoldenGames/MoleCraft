@@ -8,3 +8,5 @@ commands:
   setpoint:
   stats:
   world:
+  close:
+  start:

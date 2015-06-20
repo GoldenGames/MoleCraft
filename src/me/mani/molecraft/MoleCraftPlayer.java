@@ -14,6 +14,7 @@ public class MoleCraftPlayer {
 	private Location deathLocation;
 	private boolean isIngame;
 	private boolean isSpectator;
+	private boolean isInPlayerView;
 	
 	public MoleCraftPlayer(Player player) {
 		moleCraftPlayers.put(player, this);
@@ -46,6 +47,14 @@ public class MoleCraftPlayer {
 	
 	public void setSpectator(boolean spectator) {
 		isSpectator = spectator;
+	}
+	
+	public boolean isInPlayerView() {
+		return isInPlayerView;
+	}
+	
+	public void setInPlayerView(boolean inPlayerView) {
+		isInPlayerView = inPlayerView;
 	}
 	
 	public static MoleCraftPlayer getMoleCraftPlayer(Player player) {

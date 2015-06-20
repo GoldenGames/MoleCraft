@@ -42,6 +42,10 @@ public class CountdownManager {
 		public void run() {
 			CountdownCountEvent ev = new CountdownCountEvent(from);
 			countConsumer.accept(ev);
+			if (ev.isCancelled()) {
+				cancel();
+				return;
+			}
 			Messenger.sendAll(ev.hasMessage() ? ev.getMessage() : null);
 			Effects.playAll(ev.hasSound() ? ev.getSound() : null);
 			if (from == to)

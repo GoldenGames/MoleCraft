@@ -13,6 +13,8 @@ public class Constants {
 	public static final String PARKOUR_SPAWN = "parkourSpawn";
 	/** SQL: The location of the stats hologram */
 	public static final String STATS_DISPLAY = "statsDisplay";
+	/** SQL: The total game count */
+	public static final String TOTAL_GAME_COUNT = "totalGameCount";
 	// Here the molecraft main constants ends
 	
 	// Here the map specified constants starts

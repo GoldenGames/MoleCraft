@@ -9,7 +9,9 @@ import org.bukkit.entity.Player;
 
 public class Messenger {
 	
+	private static String prePrefix = "";
 	private static String prefix = "";
+	private static String suffix = "";
 	
 	public static void sendAll(String message) {
 		sendAll(message, false);
@@ -18,7 +20,7 @@ public class Messenger {
 	public static void sendAll(String message, boolean noPrefix) {
 		if (message == null)
 			return;
-		Bukkit.broadcastMessage(noPrefix ? "" : prefix + message);
+		Bukkit.broadcastMessage(noPrefix ? "" : prefix + message.replaceAll("§r", prePrefix));
 	}
 	
 	public static void sendBarAll(String message, boolean noPrefix) {
@@ -35,13 +37,13 @@ public class Messenger {
 	public static void send(Player player, String message, boolean noPrefix) {
 		if (message == null)
 			return;
-		player.sendMessage(noPrefix ? "" : prefix + message);
+		player.sendMessage(noPrefix ? "" : prefix + message.replaceAll("§r", prePrefix));
 	}
 	
 	public static void sendBar(Player player, String message, boolean noPrefix) {
 		if (message == null)
 			return;
-		PacketPlayOutChat messagePacket = new PacketPlayOutChat(ChatSerializer.a("{text:\"" + (noPrefix ? "" : prefix) + message + "\"}"), (byte) 2);
+		PacketPlayOutChat messagePacket = new PacketPlayOutChat(ChatSerializer.a("{text:\"" + (noPrefix ? "" : prefix) + message.replaceAll("§r", prePrefix) + "\"}"), (byte) 2);
 		((CraftPlayer) player).getHandle().playerConnection.sendPacket(messagePacket);
 	}
 	
@@ -49,8 +51,17 @@ public class Messenger {
 		return prefix;
 	}
 	
-	public static void setPrefix(String newPrefix) {
-		prefix = newPrefix;
+	public static void setPrefix(String prefix) {
+		Messenger.prefix = prefix;
+		prePrefix = prefix.substring(prefix.length() - 2, prefix.length());
+	}
+	
+	public static String getSuffix() {
+		return suffix;
+	}
+	
+	public static void setSuffix(String suffix) {
+		Messenger.suffix = suffix;
 	}
 	
 }

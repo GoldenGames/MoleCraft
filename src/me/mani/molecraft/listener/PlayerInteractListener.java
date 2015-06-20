@@ -2,11 +2,11 @@ package me.mani.molecraft.listener;
 
 import me.mani.molecraft.GameState;
 import me.mani.molecraft.MoleCraftListener;
-import me.mani.molecraft.listener.StatsEvent.StatsEventType;
+import me.mani.molecraft.MoleCraftPlayer;
+import me.mani.molecraft.SpecialItems;
 import me.mani.molecraft.manager.MainManager;
 
 import org.bukkit.Material;
-import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
@@ -21,6 +21,7 @@ public class PlayerInteractListener extends MoleCraftListener {
 
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent ev) {
+		
 		Player p = ev.getPlayer();
 
 		// Checks if the item is used in lobby phase, if so it will be continued
@@ -46,14 +47,12 @@ public class PlayerInteractListener extends MoleCraftListener {
 		
 		else if (GameState.getGameState() == GameState.INGAME) {
 			
-			if (ev.getClickedBlock() != null && ev.getClickedBlock().getType() != null && ev.getClickedBlock().getType() == Material.CHEST) {
-				Chest chest = (Chest) ev.getClickedBlock().getState();
-				if (!gameManager.chestManager.isOpened(chest)) {
-					gameManager.chestManager.openChest(chest);
-					StatsListener.onStatsChange(gameManager, new StatsEvent(ev.getPlayer(), StatsEventType.CHEST, 1));
-				}
-			}
-			return;
+			if (ev.getClickedBlock() != null && ev.getClickedBlock().getType() == Material.ENDER_CHEST)
+				SpecialItems.openSpecialChest(p);
+			else if (ev.getItem() != null && ev.getItem().getType() == Material.COMPASS)
+				gameManager.inventoryManager.openSpectatorInventory(p);
+			else
+				return;
 			
 		}
 		

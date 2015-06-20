@@ -1,2 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/me/mani/molecraft/listener/AsyncPlayerChatListener.java=UTF-8
+encoding//src/me/mani/molecraft/manager/GameManager.java=UTF-8
+encoding//src/me/mani/molecraft/manager/LobbyManager.java=UTF-8
 encoding//src/me/mani/molecraft/manager/SidebarManager.java=UTF-8

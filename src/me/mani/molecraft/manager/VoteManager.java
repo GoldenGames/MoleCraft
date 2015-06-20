@@ -30,8 +30,11 @@ public class VoteManager {
 	
 	public int getWinningChoiseId() {
 		int winningChoise = 0;
-		for (int i : votingsPerChoise)
-			winningChoise = votingsPerChoise[i] > winningChoise ? i : winningChoise;
+		int mostVotings = 0;
+		for (int i = 0; i < votingsPerChoise.length; i++) {
+			winningChoise = votingsPerChoise[i] > mostVotings ? i : winningChoise;
+			mostVotings = votingsPerChoise[i] > mostVotings ? votingsPerChoise[i] : mostVotings;
+		}
 		return winningChoise;
 	}
 	

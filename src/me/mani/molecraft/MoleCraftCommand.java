@@ -33,8 +33,12 @@ public abstract class MoleCraftCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (!(sender instanceof Player))
 			Messenger.sendAll(onCommand(null, args));
-		else
-			Messenger.send((Player) sender, (onCommand((Player) sender, args)));		
+		else {
+			String message = (onCommand((Player) sender, args));
+			if (message != null)
+				Messenger.send((Player) sender, message);	
+		}		
+				
 		return true;
 	}
 	
